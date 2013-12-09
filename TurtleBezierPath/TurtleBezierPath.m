@@ -37,7 +37,8 @@
 
 -(id)copyWithZone:(NSZone *)zone
 {
-    TurtleBezierPath *clone = [ super copyWithZone:zone ];
+    TurtleBezierPath *clone = [[ TurtleBezierPath allocWithZone:zone ] init ];
+    clone.CGPath = self.CGPath;
     clone.bearing = self.bearing;
     clone.penUp = self.penUp;
     
