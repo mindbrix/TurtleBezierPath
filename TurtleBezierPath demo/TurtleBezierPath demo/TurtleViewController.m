@@ -99,14 +99,14 @@
 {
     self.value0 = floorf( self.valueSlider0.value );
     
-    [ self updateCommandLabelForIndex:self.commandControl.selectedSegmentIndex ];
+    [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
 }
 
 -(void)sliderValueChanged1:(id)sender
 {
     self.value1 = floorf( self.valueSlider1.value );
     
-    [ self updateCommandLabelForIndex:self.commandControl.selectedSegmentIndex ];
+    [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
 }
 
 -(void)selectCommmandAtIndex:(NSInteger)index
@@ -114,14 +114,50 @@
     self.valueSlider0.enabled = ( index >= 0 );
     self.valueSlider1.enabled = ( index > 1 );
     
-    self.valueSlider0.value = self.valueSlider1.value = 0.0f;
+    self.value0 = self.value1 = self.valueSlider0.value = self.valueSlider1.value = 0.0f;
     
     self.valueSlider0.maximumValue = ( index == 1 ) ? 360.0f : 100.0f;
     self.valueSlider1.maximumValue = 360.0f;
     
-    [ self updateCommandLabelForIndex:index ];
+    [ self updateCommandForIndex:index ];
 }
 
+
+-(void)updateCommandForIndex:(NSInteger)index
+{
+    [ self updateCommandLabelForIndex:index ];
+    
+    if( index < 0 )
+    {
+        return;
+    }
+    
+    TurtleBezierPath *turtlePath = [ TurtleBezierPath new ];
+    turtlePath.lineWidth = 1.0f;
+    self.demoView.strokeColour = [ UIColor blackColor ];
+    
+    [ turtlePath home ];
+    
+    if( index == 0 )
+    {
+        [ turtlePath forward:self.value0 ];
+    }
+    else if( index == 1 )
+    {
+        [ turtlePath turn:self.value0 ];
+    }
+    else if( index == 2 )
+    {
+        [ turtlePath leftArc:self.value0 turn:self.value1 ];
+    }
+    else if( index == 3 )
+    {
+        [ turtlePath rightArc:self.value0 turn:self.value1 ];
+    }
+    
+    self.demoView.path = turtlePath;
+    
+}
 
 -(void)updateCommandLabelForIndex:(NSInteger)index
 {
@@ -142,6 +178,7 @@
         self.commandLabel.text = [ NSString stringWithFormat:@"%@:%g", commandTitle, self.value0 ];
     }
 }
+
 
 #pragma mark - Demo pattern
 
