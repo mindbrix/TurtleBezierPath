@@ -24,6 +24,7 @@
 		A64AA0C118559841006A2736 /* TurtleBezierPath_demoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0C018559841006A2736 /* TurtleBezierPath_demoTests.m */; };
 		A64AA0CC1855B947006A2736 /* TurtleDemoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0CB1855B947006A2736 /* TurtleDemoView.m */; };
 		A64AA0CF1855BA41006A2736 /* TurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */; };
+		A64AA0D918565F8A006A2736 /* TurtleCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		A64AA0CB1855B947006A2736 /* TurtleDemoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleDemoView.m; sourceTree = "<group>"; };
 		A64AA0CD1855BA41006A2736 /* TurtleBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TurtleBezierPath.h; path = ../../TurtleBezierPath/TurtleBezierPath.h; sourceTree = "<group>"; };
 		A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TurtleBezierPath.m; path = ../../TurtleBezierPath/TurtleBezierPath.m; sourceTree = "<group>"; };
+		A64AA0D718565F8A006A2736 /* TurtleCanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleCanvasView.h; sourceTree = "<group>"; };
+		A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleCanvasView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +135,8 @@
 				A64AA0CB1855B947006A2736 /* TurtleDemoView.m */,
 				A64AA0CD1855BA41006A2736 /* TurtleBezierPath.h */,
 				A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */,
+				A64AA0D718565F8A006A2736 /* TurtleCanvasView.h */,
+				A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */,
 			);
 			path = "TurtleBezierPath demo";
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A64AA0D918565F8A006A2736 /* TurtleCanvasView.m in Sources */,
 				A64AA0AC18559841006A2736 /* TurtleViewController.m in Sources */,
 				A64AA0A318559841006A2736 /* TurtleAppDelegate.m in Sources */,
 				A64AA09F18559841006A2736 /* main.m in Sources */,
