@@ -11,6 +11,28 @@
 @implementation TurtleBezierPath
 
 
+#pragma mark - NSCoding
+
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [ super encodeWithCoder:aCoder ];
+    
+    [ aCoder encodeFloat:self.bearing forKey:@"bearing" ];
+    [ aCoder encodeBool:self.penUp forKey:@"penUp" ];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if( self = [ super initWithCoder:aDecoder ])
+    {
+        self.bearing = [ aDecoder decodeFloatForKey:@"bearing" ];
+        self.penUp = [ aDecoder decodeBoolForKey:@"penUp" ];
+    }
+    
+    return self;
+}
+
+
 #pragma mark - NSCopying
 
 -(id)copyWithZone:(NSZone *)zone

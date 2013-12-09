@@ -56,7 +56,13 @@
     //[ turtlePath stroke ];
     
     TurtleBezierPath *clone = [ turtlePath copy ];
-    [ clone stroke ];
+   // [ clone stroke ];
+    
+    
+    NSData *cloneData = [ NSKeyedArchiver archivedDataWithRootObject:clone ];
+    TurtleBezierPath *unarchivedPath = [ NSKeyedUnarchiver unarchiveObjectWithData:cloneData ];
+    
+    [ unarchivedPath stroke ];
 }
 
 
