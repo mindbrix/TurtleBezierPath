@@ -93,16 +93,11 @@
 
 static inline CGFloat radians (CGFloat degrees) {return degrees * M_PI / 180.0;}
 
--(CGPoint)toCartesian:(CGFloat)radius bearing:(CGFloat)bearing
+-(CGPoint)toCartesian:(CGFloat)radius bearing:(CGFloat)bearing origin:(CGPoint)origin
 {
     CGFloat bearingInRadians = radians( bearing );
     
-    return CGPointMake( radius * sinf( bearingInRadians ), -radius * cosf( bearingInRadians ));
-}
-
--(CGPoint)toCartesian:(CGFloat)radius bearing:(CGFloat)bearing origin:(CGPoint)origin
-{
-    CGPoint vector = [ self toCartesian:radius bearing:bearing ];
+    CGPoint vector = CGPointMake( radius * sinf( bearingInRadians ), -radius * cosf( bearingInRadians ));
     
     return CGPointMake( origin.x + vector.x, origin.y + vector.y );
 }
