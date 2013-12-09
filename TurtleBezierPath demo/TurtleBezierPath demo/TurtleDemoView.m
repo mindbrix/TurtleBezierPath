@@ -53,7 +53,10 @@
     
     turtlePath.lineWidth = 1.0f;
     [[ UIColor blackColor ] set ];
-    [ turtlePath stroke ];
+    //[ turtlePath stroke ];
+    
+    TurtleBezierPath *clone = [ turtlePath copy ];
+    [ clone stroke ];
 }
 
 

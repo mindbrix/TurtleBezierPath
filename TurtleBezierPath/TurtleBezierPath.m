@@ -10,6 +10,19 @@
 
 @implementation TurtleBezierPath
 
+
+#pragma mark - NSCopying
+
+-(id)copyWithZone:(NSZone *)zone
+{
+    TurtleBezierPath *clone = [ super copyWithZone:zone ];
+    clone.bearing = self.bearing;
+    clone.penUp = self.penUp;
+    
+    return clone;
+}
+
+
 #pragma mark - Private methods
 
 -(void)arc:(CGFloat)radius turn:(CGFloat)angle clockwise:(BOOL)clockwise
