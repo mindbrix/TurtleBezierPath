@@ -17,8 +17,12 @@
 @property( nonatomic, strong ) UISegmentedControl *commandControl;
 @property( nonatomic, strong ) UILabel *commandLabel;
 @property( nonatomic, strong ) TurtleCanvasView *demoView;
+
 @property( nonatomic, strong ) UISlider *valueSlider0;
+@property CGFloat value0;
+
 @property( nonatomic, strong ) UISlider *valueSlider1;
+@property CGFloat value1;
 
 @end
 
@@ -93,12 +97,16 @@
 
 -(void)sliderValueChanged0:(id)sender
 {
+    self.value0 = floorf( self.valueSlider0.value );
     
+    [ self updateCommandLabelForIndex:self.commandControl.selectedSegmentIndex ];
 }
 
 -(void)sliderValueChanged1:(id)sender
 {
+    self.value1 = floorf( self.valueSlider1.value );
     
+    [ self updateCommandLabelForIndex:self.commandControl.selectedSegmentIndex ];
 }
 
 -(void)selectCommmandAtIndex:(NSInteger)index
@@ -117,9 +125,22 @@
 
 -(void)updateCommandLabelForIndex:(NSInteger)index
 {
-    self.commandLabel.text = ( index < 0 ) ? nil : [ self.commandControl titleForSegmentAtIndex:index ];
+    if( index < 0 )
+    {
+        self.commandLabel.text = nil;
+        return;
+    }
     
+    NSString *commandTitle = [ self.commandControl titleForSegmentAtIndex:index ];
     
+    if( index > 1 )
+    {
+        self.commandLabel.text = [ NSString stringWithFormat:@"%@:%g turn:%g", commandTitle, self.value0, self.value1 ];
+    }
+    else
+    {
+        self.commandLabel.text = [ NSString stringWithFormat:@"%@:%g", commandTitle, self.value0 ];
+    }
 }
 
 #pragma mark - Demo pattern
