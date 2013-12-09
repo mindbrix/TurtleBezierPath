@@ -14,7 +14,11 @@
 
 @interface TurtleViewController ()
 
+@property( nonatomic, strong ) UISegmentedControl *commandControl;
+@property( nonatomic, strong ) UILabel *commandLabel;
 @property( nonatomic, strong ) TurtleCanvasView *demoView;
+@property( nonatomic, strong ) UISlider *valueSlider0;
+@property( nonatomic, strong ) UISlider *valueSlider1;
 
 @end
 
@@ -29,6 +33,99 @@
     self.demoView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [ self.view addSubview:self.demoView ];
     
+    self.commandLabel = [ UILabel new ];
+    self.commandLabel.font = [ UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0f ];
+    self.commandLabel.textAlignment = NSTextAlignmentCenter;
+    self.commandLabel.textColor = [ UIColor blackColor ];
+    self.commandLabel.text = @"commandLabel";
+    [ self.view addSubview:self.commandLabel ];
+    
+    self.commandControl = [[ UISegmentedControl alloc ] initWithItems:@[ @"forward", @"turn", @"leftArc", @"rightArc" ]];
+    [ self.commandControl addTarget:self action:@selector(commmandSelected:) forControlEvents:UIControlEventValueChanged ];
+    [ self.view addSubview:self.commandControl ];
+    
+    self.valueSlider0 = [ UISlider new ];
+    [ self.valueSlider0 addTarget:self action:@selector(sliderValueChanged0:) forControlEvents:UIControlEventValueChanged ];
+    [ self.view addSubview:self.valueSlider0 ];
+    
+    self.valueSlider1 = [ UISlider new ];
+    [ self.valueSlider1 addTarget:self action:@selector(sliderValueChanged1:) forControlEvents:UIControlEventValueChanged ];
+    [ self.view addSubview:self.valueSlider1 ];
+    
+    [ self selectCommmandAtIndex: -1 ];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [ super viewWillAppear:animated ];
+    
+    [ self layoutViews ];
+}
+
+
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [ self layoutViews ];
+}
+
+
+-(void)layoutViews
+{
+    self.commandLabel.frame = CGRectMake( 0.0f, 20.0f, self.view.bounds.size.width, self.commandLabel.font.pointSize * 1.5f );
+    
+    self.commandControl.center = CGPointMake( self.view.bounds.size.width / 2.0f, self.view.bounds.size.height - 80.0f );
+    
+    CGRect valueSliderFrame = self.commandControl.frame;
+    valueSliderFrame.origin.y = CGRectGetMaxY( self.commandControl.frame );
+    self.valueSlider0.frame = valueSliderFrame;
+    
+    valueSliderFrame.origin.y = CGRectGetMaxY( self.valueSlider0.frame );
+    self.valueSlider1.frame = valueSliderFrame;
+}
+
+
+#pragma mark - Controls
+
+-(void)commmandSelected:(id)sender
+{
+    [ self selectCommmandAtIndex:self.commandControl.selectedSegmentIndex ];
+}
+
+-(void)sliderValueChanged0:(id)sender
+{
+    
+}
+
+-(void)sliderValueChanged1:(id)sender
+{
+    
+}
+
+-(void)selectCommmandAtIndex:(NSInteger)index
+{
+    self.valueSlider0.enabled = ( index >= 0 );
+    self.valueSlider1.enabled = ( index > 1 );
+    
+    self.valueSlider0.value = self.valueSlider1.value = 0.0f;
+    
+    self.valueSlider0.maximumValue = ( index == 1 ) ? 360.0f : 100.0f;
+    self.valueSlider1.maximumValue = 360.0f;
+    
+    [ self updateCommandLabelForIndex:index ];
+}
+
+
+-(void)updateCommandLabelForIndex:(NSInteger)index
+{
+    self.commandLabel.text = ( index < 0 ) ? nil : [ self.commandControl titleForSegmentAtIndex:index ];
+    
+    
+}
+
+#pragma mark - Demo pattern
+
+-(void)drawDemoPattern
+{
     self.demoView.fillColour = [ UIColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f ];
     self.demoView.strokeColour = [ UIColor whiteColor ];
     self.demoView.path = [ self demoPath ];
