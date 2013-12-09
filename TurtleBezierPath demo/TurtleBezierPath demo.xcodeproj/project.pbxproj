@@ -22,6 +22,7 @@
 		A64AA0B718559841006A2736 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A64AA09618559841006A2736 /* UIKit.framework */; };
 		A64AA0BF18559841006A2736 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A64AA0BD18559841006A2736 /* InfoPlist.strings */; };
 		A64AA0C118559841006A2736 /* TurtleBezierPath_demoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0C018559841006A2736 /* TurtleBezierPath_demoTests.m */; };
+		A64AA0CC1855B947006A2736 /* TurtleDemoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0CB1855B947006A2736 /* TurtleDemoView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		A64AA0BC18559841006A2736 /* TurtleBezierPath demoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TurtleBezierPath demoTests-Info.plist"; sourceTree = "<group>"; };
 		A64AA0BE18559841006A2736 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A64AA0C018559841006A2736 /* TurtleBezierPath_demoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TurtleBezierPath_demoTests.m; sourceTree = "<group>"; };
+		A64AA0CA1855B947006A2736 /* TurtleDemoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleDemoView.h; sourceTree = "<group>"; };
+		A64AA0CB1855B947006A2736 /* TurtleDemoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleDemoView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +125,8 @@
 				A64AA0AB18559841006A2736 /* TurtleViewController.m */,
 				A64AA0AD18559841006A2736 /* Images.xcassets */,
 				A64AA09918559841006A2736 /* Supporting Files */,
+				A64AA0CA1855B947006A2736 /* TurtleDemoView.h */,
+				A64AA0CB1855B947006A2736 /* TurtleDemoView.m */,
 			);
 			path = "TurtleBezierPath demo";
 			sourceTree = "<group>";
@@ -257,6 +262,7 @@
 				A64AA0AC18559841006A2736 /* TurtleViewController.m in Sources */,
 				A64AA0A318559841006A2736 /* TurtleAppDelegate.m in Sources */,
 				A64AA09F18559841006A2736 /* main.m in Sources */,
+				A64AA0CC1855B947006A2736 /* TurtleDemoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
