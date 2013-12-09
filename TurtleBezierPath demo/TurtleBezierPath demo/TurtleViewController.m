@@ -18,6 +18,9 @@
 @property( nonatomic, strong ) UILabel *commandLabel;
 @property( nonatomic, strong ) TurtleCanvasView *demoView;
 
+@property( nonatomic, strong ) TurtleBezierPath *path;
+@property( nonatomic, strong ) TurtleBezierPath *previewPath;
+
 @property( nonatomic, strong ) UISlider *valueSlider0;
 @property CGFloat value0;
 
@@ -36,6 +39,9 @@
     self.demoView = [[ TurtleCanvasView alloc ] initWithFrame:self.view.bounds ];
     self.demoView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [ self.view addSubview:self.demoView ];
+    
+    UITapGestureRecognizer *tap = [[ UITapGestureRecognizer alloc ] initWithTarget:self action:@selector(confirmationTapped:)];
+    [ self.demoView addGestureRecognizer:tap ];
     
     self.commandLabel = [ UILabel new ];
     self.commandLabel.font = [ UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0f ];
@@ -57,6 +63,13 @@
     [ self.view addSubview:self.valueSlider1 ];
     
     [ self selectCommmandAtIndex: -1 ];
+    
+    self.path = [ TurtleBezierPath new ];
+    //self.previewPath = [ TurtleBezierPath new ];
+    
+    [ self.path home ];
+    self.path.lineWidth = 1.0f;
+    self.demoView.strokeColour = [ UIColor blackColor ];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -95,6 +108,12 @@
     [ self selectCommmandAtIndex:self.commandControl.selectedSegmentIndex ];
 }
 
+-(void)confirmationTapped:(id)sender
+{
+    self.path = self.previewPath;
+}
+
+
 -(void)sliderValueChanged0:(id)sender
 {
     self.value0 = floorf( self.valueSlider0.value );
@@ -132,30 +151,26 @@
         return;
     }
     
-    TurtleBezierPath *turtlePath = [ TurtleBezierPath new ];
-    turtlePath.lineWidth = 1.0f;
-    self.demoView.strokeColour = [ UIColor blackColor ];
+    self.previewPath = [ self.path copy ];
     
-    [ turtlePath home ];
-    
-    if( index == 0 )
+    if( index == 0 && self.value0 > 0.0f )
     {
-        [ turtlePath forward:self.value0 ];
+        [ self.previewPath forward:self.value0 ];
     }
-    else if( index == 1 )
+    else if( index == 1 && self.value0 > 0.0f )
     {
-        [ turtlePath turn:self.value0 ];
+        [ self.previewPath turn:self.value0 ];
     }
-    else if( index == 2 )
+    else if( index == 2 && self.value0 > 0.0f && self.value1 > 0.0f )
     {
-        [ turtlePath leftArc:self.value0 turn:self.value1 ];
+        [ self.previewPath leftArc:self.value0 turn:self.value1 ];
     }
-    else if( index == 3 )
+    else if( index == 3 && self.value0 > 0.0f && self.value1 > 0.0f )
     {
-        [ turtlePath rightArc:self.value0 turn:self.value1 ];
+        [ self.previewPath rightArc:self.value0 turn:self.value1 ];
     }
     
-    self.demoView.path = turtlePath;
+    self.demoView.path = self.previewPath;
     
 }
 
