@@ -8,6 +8,9 @@
 
 #import "TurtleDemoView.h"
 
+#import "TurtleBezierPath.h"
+
+
 @implementation TurtleDemoView
 
 - (id)initWithFrame:(CGRect)frame
@@ -20,13 +23,38 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+-(void)setFrame:(CGRect)frame
+{
+    [ super setFrame:frame ];
+    
+    [ self setNeedsDisplay ];
+}
+
+
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
+    TurtleBezierPath *turtlePath = [ TurtleBezierPath new ];
+    
+    [ turtlePath home ];
+    [ turtlePath up ];
+    [ turtlePath forward:100.0f ];
+    [ turtlePath down ];
+    
+    for( NSInteger i = 0; i < 400; i++ )
+    {
+        CGFloat scale = 1 - (CGFloat)i / 400.0f;
+        
+        [ turtlePath rightArc:20.0f * scale turn:200.0f ];
+        [ turtlePath turn:-180.0f ];
+    }
+    
+    [ turtlePath centreInBounds:self.bounds ];
+    
+    turtlePath.lineWidth = 1.0f;
+    [[ UIColor blackColor ] set ];
+    [ turtlePath stroke ];
 }
-*/
+
 
 @end
