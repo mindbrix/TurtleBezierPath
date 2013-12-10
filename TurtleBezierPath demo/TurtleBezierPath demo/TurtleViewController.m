@@ -90,14 +90,16 @@
 {
     self.commandLabel.frame = CGRectMake( 0.0f, 20.0f, self.view.bounds.size.width, self.commandLabel.font.pointSize * 1.5f );
     
-    self.commandControl.center = CGPointMake( self.view.bounds.size.width / 2.0f, self.view.bounds.size.height - 80.0f );
+    self.valueSlider0.frame  = self.valueSlider1.frame = CGRectMake( 0.0, 0.0, self.commandControl.bounds.size.width, self.valueSlider0.bounds.size.height );
     
-    CGRect valueSliderFrame = self.commandControl.frame;
-    valueSliderFrame.origin.y = CGRectGetMaxY( self.commandControl.frame );
-    self.valueSlider0.frame = valueSliderFrame;
+    CGFloat originY = self.view.bounds.size.height;
     
-    valueSliderFrame.origin.y = CGRectGetMaxY( self.valueSlider0.frame );
-    self.valueSlider1.frame = valueSliderFrame;
+    for( UIView *view in @[ self.valueSlider1, self.valueSlider0, self.commandControl ])
+    {
+        view.frame = CGRectMake(( self.view.bounds.size.width - view.bounds.size.width ) / 2.0f, originY - view.bounds.size.height, view.bounds.size.width, view.bounds.size.height );
+        
+        originY = view.frame.origin.y;
+    }
 }
 
 
