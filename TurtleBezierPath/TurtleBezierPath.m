@@ -84,6 +84,7 @@
 -(void)home
 {
     [ self moveToPoint:CGPointZero ];
+    self.bearing = 0.0f;
 }
 
 -(void)forward:(CGFloat)distance

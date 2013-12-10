@@ -135,17 +135,34 @@
     [ self.view addSubview:self.valueSlider1 ];
     
     [ self selectCommmandAtIndex: -1 ];
-    
-    
 }
 
 
 -(TurtleBezierPath *)pointerPath
 {
     TurtleBezierPath *path = [ TurtleBezierPath new ];
+
+    path.lineCapStyle = kCGLineCapRound;
+    path.lineWidth = 2.0;
+    
+    [ path home ];
+    [ path forward:0.01f ];
+    
+    [ path up ];
     
     [ path home ];
     [ path forward: 20.0f ];
+    [ path turn:180.0f ];
+    [ path down ];
+    [ path leftArc:40.f turn:30.0f ];
+    
+    [ path up ];
+    
+    [ path home ];
+    [ path forward: 20.0f ];
+    [ path turn:180.0f ];
+    [ path down ];
+    [ path rightArc:40.f turn:30.0f ];
     
     return path;
 }
@@ -219,6 +236,7 @@
     self.canvasView.path = self.previewPath;
     
     [ self positionPointer ];
+    self.pointerView.alpha = ( self.previewPath.penUp ) ? 0.333f : 1.0f;
     
     NSString *downUp = ( self.previewPath.penUp ) ? @"down" : @"up";
     [ self.commandControl setTitle:downUp forSegmentAtIndex:4 ];
