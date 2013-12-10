@@ -96,6 +96,12 @@
 
 -(void)initDemoApp
 {
+    self.path = [ TurtleBezierPath new ];
+    [ self.path home ];
+    self.path.lineWidth = 2.0f;
+    self.path.lineCapStyle = kCGLineCapRound;
+    self.previewPath = [ self.path copy ];
+    
     self.canvasView = [[ TurtleCanvasView alloc ] initWithFrame:self.view.bounds ];
     self.canvasView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [ self.view addSubview:self.canvasView ];
@@ -115,7 +121,7 @@
     self.commandLabel.text = @"commandLabel";
     [ self.view addSubview:self.commandLabel ];
     
-    self.commandControl = [[ UISegmentedControl alloc ] initWithItems:@[ @"forward", @"turn", @"leftArc", @"rightArc" ]];
+    self.commandControl = [[ UISegmentedControl alloc ] initWithItems:@[ @"forward", @"turn", @"leftArc", @"rightArc", @"up" ]];
     self.commandControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [ self.commandControl addTarget:self action:@selector(commmandSelected:) forControlEvents:UIControlEventValueChanged ];
     [ self.view addSubview:self.commandControl ];
@@ -130,11 +136,7 @@
     
     [ self selectCommmandAtIndex: -1 ];
     
-    self.path = [ TurtleBezierPath new ];
-    [ self.path home ];
-    self.path.lineWidth = 2.0f;
-    self.path.lineCapStyle = kCGLineCapRound;
-    self.previewPath = [ self.path copy ];
+    
 }
 
 
@@ -161,8 +163,8 @@
 {
     self.path = self.previewPath;
     
-    self.valueSlider0.enabled = ( index >= 0 );
-    self.valueSlider1.enabled = ( index > 1 );
+    self.valueSlider0.hidden = !( index >= 0 && index < 4 );
+    self.valueSlider1.hidden = !( index > 1 && index < 4 );
     
     self.valueSlider0.value = 0.0f;
     self.valueSlider1.value = ( index > 1 ) ? 90.0f : 0.0f;
@@ -203,11 +205,23 @@
     {
         [ self.previewPath rightArc:self.valueSlider0.value turn:self.valueSlider1.value ];
     }
-    
+    else if( index == 4 )
+    {
+        if( self.previewPath.penUp )
+        {
+            [ self.previewPath down ];
+        }
+        else
+        {
+            [ self.previewPath up ];
+        }
+    }
     self.canvasView.path = self.previewPath;
     
     [ self positionPointer ];
     
+    NSString *downUp = ( self.previewPath.penUp ) ? @"down" : @"up";
+    [ self.commandControl setTitle:downUp forSegmentAtIndex:4 ];
 }
 
 -(void)updateCommandLabelForIndex:(NSInteger)index
@@ -220,13 +234,17 @@
     
     NSString *commandTitle = [ self.commandControl titleForSegmentAtIndex:index ];
     
-    if( index > 1 )
+    if( index < 2 )
+    {
+        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g ]", commandTitle, self.valueSlider0.value ];
+    }
+    else if( index < 4 )
     {
         self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g turn:%g ]", commandTitle, self.valueSlider0.value, self.valueSlider1.value ];
     }
     else
     {
-        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g ]", commandTitle, self.valueSlider0.value ];
+        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@ ]", commandTitle ];
     }
 }
 
