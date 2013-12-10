@@ -44,8 +44,18 @@
 {
     [ super viewWillAppear:animated ];
     
+    [ self becomeFirstResponder ];
+    
     [ self layoutViews ];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    // No longer need to receive the shake gesture event since the view is gone
+    [self resignFirstResponder];
+    
+    [super viewWillDisappear:animated];
+}
+
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
@@ -74,6 +84,23 @@
 }
 
 
+#pragma mark - UIResponder
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    if (motion == UIEventSubtypeMotionShake)
+    {
+        NSLog(@"Shaking!!!");
+        
+        [ self initPath ];
+        
+        self.commandControl.selectedSegmentIndex = -1;
+        
+        [ self selectCommmandAtIndex:-1 ];
+    }
+}
+
+
 #pragma mark - Controls
 
 -(void)commmandSelected:(id)sender
@@ -96,12 +123,6 @@
 
 -(void)initDemoApp
 {
-    self.path = [ TurtleBezierPath new ];
-    [ self.path home ];
-    self.path.lineWidth = 2.0f;
-    self.path.lineCapStyle = kCGLineCapRound;
-    self.previewPath = [ self.path copy ];
-    
     self.canvasView = [[ TurtleCanvasView alloc ] initWithFrame:self.view.bounds ];
     self.canvasView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [ self.view addSubview:self.canvasView ];
@@ -135,6 +156,18 @@
     [ self.view addSubview:self.valueSlider1 ];
     
     [ self selectCommmandAtIndex: -1 ];
+    
+    [ self initPath ];
+}
+
+
+-(void)initPath
+{
+    self.path = [ TurtleBezierPath new ];
+    [ self.path home ];
+    self.path.lineWidth = 2.0f;
+    self.path.lineCapStyle = kCGLineCapRound;
+    self.previewPath = [ self.path copy ];
 }
 
 
@@ -199,11 +232,6 @@
 {
     [ self updateCommandLabelForIndex:index ];
     
-    if( index < 0 )
-    {
-        return;
-    }
-    
     self.previewPath = [ self.path copy ];
     
     if( index == 0 && self.valueSlider0.value > 0.0f )
@@ -233,6 +261,7 @@
             [ self.previewPath up ];
         }
     }
+    
     self.canvasView.path = self.previewPath;
     
     [ self positionPointer ];
