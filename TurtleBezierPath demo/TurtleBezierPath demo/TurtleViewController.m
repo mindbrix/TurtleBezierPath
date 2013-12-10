@@ -8,6 +8,8 @@
 
 #import "TurtleViewController.h"
 
+#import "RoundedUISlider.h"
+
 #import "TurtleCanvasView.h"
 #import "TurtleDemoPatternView.h"
 #import "TurtleBezierPath.h"
@@ -23,11 +25,8 @@
 @property( nonatomic, strong ) TurtleBezierPath *path;
 @property( nonatomic, strong ) TurtleBezierPath *previewPath;
 
-@property( nonatomic, strong ) UISlider *valueSlider0;
-@property CGFloat value0;
-
-@property( nonatomic, strong ) UISlider *valueSlider1;
-@property CGFloat value1;
+@property( nonatomic, strong ) RoundedUISlider *valueSlider0;
+@property( nonatomic, strong ) RoundedUISlider *valueSlider1;
 
 @end
 
@@ -84,16 +83,12 @@
 
 -(void)sliderValueChanged0:(id)sender
 {
-    self.value0 = floorf( self.valueSlider0.value );
-    
     [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
 }
 
 -(void)sliderValueChanged1:(id)sender
 {
-    self.value1 = floorf( self.valueSlider1.value );
-    
-    [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
+   [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
 }
 
 
@@ -113,6 +108,7 @@
     
     
     self.commandLabel = [ UILabel new ];
+    self.commandLabel.backgroundColor = [ UIColor clearColor ];
     self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:18.0f ];
     self.commandLabel.textAlignment = NSTextAlignmentCenter;
     self.commandLabel.textColor = [ UIColor blackColor ];
@@ -123,11 +119,11 @@
     [ self.commandControl addTarget:self action:@selector(commmandSelected:) forControlEvents:UIControlEventValueChanged ];
     [ self.view addSubview:self.commandControl ];
     
-    self.valueSlider0 = [ UISlider new ];
+    self.valueSlider0 = [ RoundedUISlider new ];
     [ self.valueSlider0 addTarget:self action:@selector(sliderValueChanged0:) forControlEvents:UIControlEventValueChanged ];
     [ self.view addSubview:self.valueSlider0 ];
     
-    self.valueSlider1 = [ UISlider new ];
+    self.valueSlider1 = [ RoundedUISlider new ];
     [ self.valueSlider1 addTarget:self action:@selector(sliderValueChanged1:) forControlEvents:UIControlEventValueChanged ];
     [ self.view addSubview:self.valueSlider1 ];
     
@@ -157,8 +153,6 @@
     [ centredPath centreInBounds:self.view.bounds ];
     
     self.pointerView.center = centredPath.currentPoint;
-    
-    //CGAffineTransform translation = CGAffineTransformMakeTranslation( centredPath.currentPoint.x, centredPath.currentPoint.y );
     self.pointerView.transform = CGAffineTransformMakeRotation( centredPath.bearing * M_PI / 180.0f );
 }
 
@@ -169,12 +163,13 @@
     self.valueSlider0.enabled = ( index >= 0 );
     self.valueSlider1.enabled = ( index > 1 );
     
-    self.value0 = self.valueSlider0.value = 0.0f;
-    self.value1 = self.valueSlider1.value = ( index > 1 ) ? 90.0f : 0.0f;
+    self.valueSlider0.value = 0.0f;
+    self.valueSlider1.value = ( index > 1 ) ? 90.0f : 0.0f;
     self.valueSlider0.maximumValue = ( index == 1 ) ? 360.0f : 100.0f;
     self.valueSlider1.maximumValue = 360.0f;
     
-    [ self updateCommandForIndex:index ];
+    self.valueSlider0.rounding = ( index == 1 ) ? 5.0f : 1.0f;
+    self.valueSlider1.rounding = 5.0f;
 }
 
 
@@ -189,21 +184,21 @@
     
     self.previewPath = [ self.path copy ];
     
-    if( index == 0 && self.value0 > 0.0f )
+    if( index == 0 && self.valueSlider0.value > 0.0f )
     {
-        [ self.previewPath forward:self.value0 ];
+        [ self.previewPath forward:self.valueSlider0.value ];
     }
-    else if( index == 1 && self.value0 > 0.0f )
+    else if( index == 1 && self.valueSlider0.value > 0.0f )
     {
-        [ self.previewPath turn:self.value0 ];
+        [ self.previewPath turn:self.valueSlider0.value ];
     }
-    else if( index == 2 && self.value0 > 0.0f && self.value1 > 0.0f )
+    else if( index == 2 && self.valueSlider0.value > 0.0f && self.valueSlider1.value > 0.0f )
     {
-        [ self.previewPath leftArc:self.value0 turn:self.value1 ];
+        [ self.previewPath leftArc:self.valueSlider0.value turn:self.valueSlider1.value ];
     }
-    else if( index == 3 && self.value0 > 0.0f && self.value1 > 0.0f )
+    else if( index == 3 && self.valueSlider0.value > 0.0f && self.valueSlider1.value > 0.0f )
     {
-        [ self.previewPath rightArc:self.value0 turn:self.value1 ];
+        [ self.previewPath rightArc:self.valueSlider0.value turn:self.valueSlider1.value ];
     }
     
     self.canvasView.path = self.previewPath;
@@ -224,13 +219,12 @@
     
     if( index > 1 )
     {
-        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g turn:%g ]", commandTitle, self.value0, self.value1 ];
+        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g turn:%g ]", commandTitle, self.valueSlider0.value, self.valueSlider1.value ];
     }
     else
     {
-        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g ]", commandTitle, self.value0 ];
+        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g ]", commandTitle, self.valueSlider0.value ];
     }
 }
-
 
 @end
