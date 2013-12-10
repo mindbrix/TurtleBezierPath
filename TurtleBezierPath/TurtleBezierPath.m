@@ -39,6 +39,12 @@
 {
     TurtleBezierPath *clone = [[ TurtleBezierPath allocWithZone:zone ] init ];
     clone.CGPath = self.CGPath;
+    clone.lineCapStyle = self.lineCapStyle;
+    clone.lineJoinStyle = self.lineJoinStyle;
+    clone.lineWidth = self.lineWidth;
+    clone.miterLimit = self.miterLimit;
+    clone.flatness = self.flatness;
+    clone.usesEvenOddFillRule = self.usesEvenOddFillRule;
     clone.bearing = self.bearing;
     clone.penUp = self.penUp;
     

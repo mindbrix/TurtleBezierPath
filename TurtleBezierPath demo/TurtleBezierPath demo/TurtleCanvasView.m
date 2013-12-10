@@ -19,6 +19,7 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [ UIColor whiteColor ];
+        self.strokeColour = [ UIColor blackColor ];
     }
     return self;
 }

@@ -18,7 +18,7 @@
 @property( nonatomic, strong ) UISegmentedControl *commandControl;
 @property( nonatomic, strong ) UILabel *commandLabel;
 @property( nonatomic, strong ) TurtleCanvasView *canvasView;
-@property( nonatomic, strong ) TurtleDemoPatternView *demoView;
+@property( nonatomic, strong ) TurtleCanvasView *pointerView;
 
 @property( nonatomic, strong ) TurtleBezierPath *path;
 @property( nonatomic, strong ) TurtleBezierPath *previewPath;
@@ -37,10 +37,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
-    self.canvasView = [[ TurtleCanvasView alloc ] initWithFrame:self.view.bounds ];
-    self.canvasView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [ self.view addSubview:self.canvasView ];
     
     [ self initDemoApp ];
 }
@@ -103,6 +99,14 @@
 
 -(void)initDemoApp
 {
+    self.canvasView = [[ TurtleCanvasView alloc ] initWithFrame:self.view.bounds ];
+    self.canvasView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [ self.view addSubview:self.canvasView ];
+    
+    self.pointerView = [[ TurtleCanvasView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, 40.0f, 40.0f )];
+    [ self.view addSubview:self.pointerView ];
+    
+    
     self.commandLabel = [ UILabel new ];
     self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:18.0f ];
     self.commandLabel.textAlignment = NSTextAlignmentCenter;
@@ -126,11 +130,9 @@
     
     self.path = [ TurtleBezierPath new ];
     [ self.path home ];
-    self.path.lineWidth = 1.0f;
-    
+    self.path.lineWidth = 2.0f;
+    self.path.lineCapStyle = kCGLineCapRound;
     self.previewPath = [ self.path copy ];
-    
-    self.canvasView.strokeColour = [ UIColor blackColor ];
 }
 
 -(void)selectCommmandAtIndex:(NSInteger)index
