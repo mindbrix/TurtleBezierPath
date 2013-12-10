@@ -116,6 +116,7 @@
     [ self.view addSubview:self.commandLabel ];
     
     self.commandControl = [[ UISegmentedControl alloc ] initWithItems:@[ @"forward", @"turn", @"leftArc", @"rightArc" ]];
+    self.commandControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [ self.commandControl addTarget:self action:@selector(commmandSelected:) forControlEvents:UIControlEventValueChanged ];
     [ self.view addSubview:self.commandControl ];
     
@@ -170,6 +171,8 @@
     
     self.valueSlider0.rounding = ( index == 1 ) ? 5.0f : 1.0f;
     self.valueSlider1.rounding = 5.0f;
+    
+    [ self updateCommandForIndex:index ];
 }
 
 
