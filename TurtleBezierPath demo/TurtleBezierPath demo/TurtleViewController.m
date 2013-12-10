@@ -40,6 +40,12 @@
     self.demoView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [ self.view addSubview:self.demoView ];
     
+    [ self initDemoApp ];
+}
+
+
+-(void)initDemoApp
+{
     UITapGestureRecognizer *tap = [[ UITapGestureRecognizer alloc ] initWithTarget:self action:@selector(confirmationTapped:)];
     [ self.demoView addGestureRecognizer:tap ];
     
@@ -71,6 +77,8 @@
     self.path.lineWidth = 1.0f;
     self.demoView.strokeColour = [ UIColor blackColor ];
 }
+
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
