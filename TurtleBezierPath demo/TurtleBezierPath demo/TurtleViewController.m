@@ -133,8 +133,8 @@
     self.valueSlider0.enabled = ( index >= 0 );
     self.valueSlider1.enabled = ( index > 1 );
     
-    self.value0 = self.value1 = self.valueSlider0.value = self.valueSlider1.value = 0.0f;
-    
+    self.value0 = self.valueSlider0.value = 0.0f;
+    self.value1 = self.valueSlider1.value = ( index > 1 ) ? 90.0f : 0.0f;
     self.valueSlider0.maximumValue = ( index == 1 ) ? 360.0f : 100.0f;
     self.valueSlider1.maximumValue = 360.0f;
     
