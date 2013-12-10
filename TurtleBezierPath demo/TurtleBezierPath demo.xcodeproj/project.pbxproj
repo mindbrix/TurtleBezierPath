@@ -22,7 +22,7 @@
 		A64AA0B718559841006A2736 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A64AA09618559841006A2736 /* UIKit.framework */; };
 		A64AA0BF18559841006A2736 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A64AA0BD18559841006A2736 /* InfoPlist.strings */; };
 		A64AA0C118559841006A2736 /* TurtleBezierPath_demoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0C018559841006A2736 /* TurtleBezierPath_demoTests.m */; };
-		A64AA0CC1855B947006A2736 /* TurtleDemoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0CB1855B947006A2736 /* TurtleDemoView.m */; };
+		A64AA0CC1855B947006A2736 /* TurtleDemoPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0CB1855B947006A2736 /* TurtleDemoPatternView.m */; };
 		A64AA0CF1855BA41006A2736 /* TurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */; };
 		A64AA0D918565F8A006A2736 /* TurtleCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */; };
 /* End PBXBuildFile section */
@@ -58,8 +58,8 @@
 		A64AA0BC18559841006A2736 /* TurtleBezierPath demoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TurtleBezierPath demoTests-Info.plist"; sourceTree = "<group>"; };
 		A64AA0BE18559841006A2736 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A64AA0C018559841006A2736 /* TurtleBezierPath_demoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TurtleBezierPath_demoTests.m; sourceTree = "<group>"; };
-		A64AA0CA1855B947006A2736 /* TurtleDemoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleDemoView.h; sourceTree = "<group>"; };
-		A64AA0CB1855B947006A2736 /* TurtleDemoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleDemoView.m; sourceTree = "<group>"; };
+		A64AA0CA1855B947006A2736 /* TurtleDemoPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleDemoPatternView.h; sourceTree = "<group>"; };
+		A64AA0CB1855B947006A2736 /* TurtleDemoPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleDemoPatternView.m; sourceTree = "<group>"; };
 		A64AA0CD1855BA41006A2736 /* TurtleBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TurtleBezierPath.h; path = ../../TurtleBezierPath/TurtleBezierPath.h; sourceTree = "<group>"; };
 		A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TurtleBezierPath.m; path = ../../TurtleBezierPath/TurtleBezierPath.m; sourceTree = "<group>"; };
 		A64AA0D718565F8A006A2736 /* TurtleCanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleCanvasView.h; sourceTree = "<group>"; };
@@ -131,8 +131,8 @@
 				A64AA0AB18559841006A2736 /* TurtleViewController.m */,
 				A64AA0AD18559841006A2736 /* Images.xcassets */,
 				A64AA09918559841006A2736 /* Supporting Files */,
-				A64AA0CA1855B947006A2736 /* TurtleDemoView.h */,
-				A64AA0CB1855B947006A2736 /* TurtleDemoView.m */,
+				A64AA0CA1855B947006A2736 /* TurtleDemoPatternView.h */,
+				A64AA0CB1855B947006A2736 /* TurtleDemoPatternView.m */,
 				A64AA0CD1855BA41006A2736 /* TurtleBezierPath.h */,
 				A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */,
 				A64AA0D718565F8A006A2736 /* TurtleCanvasView.h */,
@@ -273,7 +273,7 @@
 				A64AA0AC18559841006A2736 /* TurtleViewController.m in Sources */,
 				A64AA0A318559841006A2736 /* TurtleAppDelegate.m in Sources */,
 				A64AA09F18559841006A2736 /* main.m in Sources */,
-				A64AA0CC1855B947006A2736 /* TurtleDemoView.m in Sources */,
+				A64AA0CC1855B947006A2736 /* TurtleDemoPatternView.m in Sources */,
 				A64AA0CF1855BA41006A2736 /* TurtleBezierPath.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,6 +495,7 @@
 				A64AA0C618559841006A2736 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A64AA0C718559841006A2736 /* Build configuration list for PBXNativeTarget "TurtleBezierPath demoTests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +504,7 @@
 				A64AA0C918559841006A2736 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

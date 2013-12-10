@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Nigel Barber. All rights reserved.
 //
 
-#import "TurtleDemoView.h"
+#import "TurtleDemoPatternView.h"
 
 #import "TurtleBezierPath.h"
 
 
-@implementation TurtleDemoView
+@implementation TurtleDemoPatternView
 
 - (id)initWithFrame:(CGRect)frame
 {

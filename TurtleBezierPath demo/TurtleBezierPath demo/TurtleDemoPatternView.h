@@ -11,6 +11,6 @@
 #import "TurtleCanvasView.h"
 
 
-@interface TurtleDemoView : TurtleCanvasView
+@interface TurtleDemoPatternView : TurtleCanvasView
 
 @end

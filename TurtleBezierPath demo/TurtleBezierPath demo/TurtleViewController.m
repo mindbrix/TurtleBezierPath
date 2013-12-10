@@ -9,7 +9,7 @@
 #import "TurtleViewController.h"
 
 #import "TurtleCanvasView.h"
-#import "TurtleDemoView.h"
+#import "TurtleDemoPatternView.h"
 #import "TurtleBezierPath.h"
 
 
@@ -18,7 +18,7 @@
 @property( nonatomic, strong ) UISegmentedControl *commandControl;
 @property( nonatomic, strong ) UILabel *commandLabel;
 @property( nonatomic, strong ) TurtleCanvasView *canvasView;
-@property( nonatomic, strong ) TurtleDemoView *demoView;
+@property( nonatomic, strong ) TurtleDemoPatternView *demoView;
 
 @property( nonatomic, strong ) TurtleBezierPath *path;
 @property( nonatomic, strong ) TurtleBezierPath *previewPath;
@@ -41,13 +41,6 @@
     self.canvasView = [[ TurtleCanvasView alloc ] initWithFrame:self.view.bounds ];
     self.canvasView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [ self.view addSubview:self.canvasView ];
-    
-    /*
-    self.demoView = [[ TurtleDemoView alloc ] initWithFrame:self.view.bounds ];
-    self.demoView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.demoView.backgroundColor = [ UIColor clearColor ];
-    [ self.view addSubview:self.demoView ];
-    */
     
     [ self initDemoApp ];
 }
