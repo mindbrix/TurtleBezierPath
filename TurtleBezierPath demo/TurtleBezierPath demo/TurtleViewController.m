@@ -43,43 +43,6 @@
     [ self initDemoApp ];
 }
 
-
--(void)initDemoApp
-{
-    UITapGestureRecognizer *tap = [[ UITapGestureRecognizer alloc ] initWithTarget:self action:@selector(confirmationTapped:)];
-    [ self.demoView addGestureRecognizer:tap ];
-    
-    self.commandLabel = [ UILabel new ];
-    self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:18.0f ];
-    self.commandLabel.textAlignment = NSTextAlignmentCenter;
-    self.commandLabel.textColor = [ UIColor blackColor ];
-    self.commandLabel.text = @"commandLabel";
-    [ self.view addSubview:self.commandLabel ];
-    
-    self.commandControl = [[ UISegmentedControl alloc ] initWithItems:@[ @"forward", @"turn", @"leftArc", @"rightArc" ]];
-    [ self.commandControl addTarget:self action:@selector(commmandSelected:) forControlEvents:UIControlEventValueChanged ];
-    [ self.view addSubview:self.commandControl ];
-    
-    self.valueSlider0 = [ UISlider new ];
-    [ self.valueSlider0 addTarget:self action:@selector(sliderValueChanged0:) forControlEvents:UIControlEventValueChanged ];
-    [ self.view addSubview:self.valueSlider0 ];
-    
-    self.valueSlider1 = [ UISlider new ];
-    [ self.valueSlider1 addTarget:self action:@selector(sliderValueChanged1:) forControlEvents:UIControlEventValueChanged ];
-    [ self.view addSubview:self.valueSlider1 ];
-    
-    [ self selectCommmandAtIndex: -1 ];
-    
-    self.path = [ TurtleBezierPath new ];
-    //self.previewPath = [ TurtleBezierPath new ];
-    
-    [ self.path home ];
-    self.path.lineWidth = 1.0f;
-    self.demoView.strokeColour = [ UIColor blackColor ];
-}
-
-
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [ super viewWillAppear:animated ];
@@ -87,12 +50,13 @@
     [ self layoutViews ];
 }
 
-
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [ self layoutViews ];
 }
 
+
+#pragma mark - Layout
 
 -(void)layoutViews
 {
@@ -118,12 +82,6 @@
     [ self selectCommmandAtIndex:self.commandControl.selectedSegmentIndex ];
 }
 
--(void)confirmationTapped:(id)sender
-{
-    self.path = self.previewPath;
-}
-
-
 -(void)sliderValueChanged0:(id)sender
 {
     self.value0 = floorf( self.valueSlider0.value );
@@ -138,8 +96,45 @@
     [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
 }
 
+
+#pragma mark - Demo app
+
+-(void)initDemoApp
+{
+    self.commandLabel = [ UILabel new ];
+    self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:18.0f ];
+    self.commandLabel.textAlignment = NSTextAlignmentCenter;
+    self.commandLabel.textColor = [ UIColor blackColor ];
+    self.commandLabel.text = @"commandLabel";
+    [ self.view addSubview:self.commandLabel ];
+    
+    self.commandControl = [[ UISegmentedControl alloc ] initWithItems:@[ @"forward", @"turn", @"leftArc", @"rightArc" ]];
+    [ self.commandControl addTarget:self action:@selector(commmandSelected:) forControlEvents:UIControlEventValueChanged ];
+    [ self.view addSubview:self.commandControl ];
+    
+    self.valueSlider0 = [ UISlider new ];
+    [ self.valueSlider0 addTarget:self action:@selector(sliderValueChanged0:) forControlEvents:UIControlEventValueChanged ];
+    [ self.view addSubview:self.valueSlider0 ];
+    
+    self.valueSlider1 = [ UISlider new ];
+    [ self.valueSlider1 addTarget:self action:@selector(sliderValueChanged1:) forControlEvents:UIControlEventValueChanged ];
+    [ self.view addSubview:self.valueSlider1 ];
+    
+    [ self selectCommmandAtIndex: -1 ];
+    
+    self.path = [ TurtleBezierPath new ];
+    [ self.path home ];
+    self.path.lineWidth = 1.0f;
+    
+    self.previewPath = [ self.path copy ];
+    
+    self.demoView.strokeColour = [ UIColor blackColor ];
+}
+
 -(void)selectCommmandAtIndex:(NSInteger)index
 {
+    self.path = self.previewPath;
+    
     self.valueSlider0.enabled = ( index >= 0 );
     self.valueSlider1.enabled = ( index > 1 );
     
