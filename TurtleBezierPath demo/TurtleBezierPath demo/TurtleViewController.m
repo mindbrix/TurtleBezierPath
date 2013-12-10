@@ -70,6 +70,8 @@
         
         originY = view.frame.origin.y;
     }
+    
+    [ self positionPointer ];
 }
 
 
@@ -104,6 +106,9 @@
     [ self.view addSubview:self.canvasView ];
     
     self.pointerView = [[ TurtleCanvasView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, 40.0f, 40.0f )];
+    self.pointerView.backgroundColor = [ UIColor clearColor ];
+    self.pointerView.strokeColour = [ UIColor redColor ];
+    self.pointerView.path = [ self pointerPath ];
     [ self.view addSubview:self.pointerView ];
     
     
@@ -133,6 +138,28 @@
     self.path.lineWidth = 2.0f;
     self.path.lineCapStyle = kCGLineCapRound;
     self.previewPath = [ self.path copy ];
+}
+
+
+-(TurtleBezierPath *)pointerPath
+{
+    TurtleBezierPath *path = [ TurtleBezierPath new ];
+    
+    [ path home ];
+    [ path forward: 20.0f ];
+    
+    return path;
+}
+
+-(void)positionPointer
+{
+    TurtleBezierPath *centredPath = [ self.previewPath copy ];
+    [ centredPath centreInBounds:self.view.bounds ];
+    
+    self.pointerView.center = centredPath.currentPoint;
+    
+    //CGAffineTransform translation = CGAffineTransformMakeTranslation( centredPath.currentPoint.x, centredPath.currentPoint.y );
+    self.pointerView.transform = CGAffineTransformMakeRotation( centredPath.bearing * M_PI / 180.0f );
 }
 
 -(void)selectCommmandAtIndex:(NSInteger)index
@@ -180,6 +207,8 @@
     }
     
     self.canvasView.path = self.previewPath;
+    
+    [ self positionPointer ];
     
 }
 
