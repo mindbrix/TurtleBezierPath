@@ -18,22 +18,21 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = [ UIColor whiteColor ];
+        
+        self.fillColour = [ UIColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f ];
+        self.strokeColour = [ UIColor whiteColor ];
+        self.path = [ self demoPath ];
+        
     }
     return self;
 }
 
--(void)setFrame:(CGRect)frame
-{
-    [ super setFrame:frame ];
-    
-    [ self setNeedsDisplay ];
-}
 
 
-- (void)drawRect:(CGRect)rect
+#pragma mark - Demo pattern
+
+-(TurtleBezierPath *)demoPath
 {
-    // Drawing code
     TurtleBezierPath *turtlePath = [ TurtleBezierPath new ];
     
     [ turtlePath home ];
@@ -49,20 +48,14 @@
         [ turtlePath turn:-180.0f ];
     }
     
-    [ turtlePath centreInBounds:self.bounds ];
-    
     turtlePath.lineWidth = 1.0f;
-    [[ UIColor blackColor ] set ];
-    //[ turtlePath stroke ];
     
     TurtleBezierPath *clone = [ turtlePath copy ];
-   // [ clone stroke ];
-    
     
     NSData *cloneData = [ NSKeyedArchiver archivedDataWithRootObject:clone ];
     TurtleBezierPath *unarchivedPath = [ NSKeyedUnarchiver unarchiveObjectWithData:cloneData ];
     
-    [ unarchivedPath stroke ];
+    return unarchivedPath;
 }
 
 

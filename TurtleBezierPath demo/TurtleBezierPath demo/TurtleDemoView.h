@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TurtleDemoView : UIView
+#import "TurtleCanvasView.h"
+
+
+@interface TurtleDemoView : TurtleCanvasView
 
 @end

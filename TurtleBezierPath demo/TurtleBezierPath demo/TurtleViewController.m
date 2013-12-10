@@ -9,6 +9,7 @@
 #import "TurtleViewController.h"
 
 #import "TurtleCanvasView.h"
+#import "TurtleDemoView.h"
 #import "TurtleBezierPath.h"
 
 
@@ -16,7 +17,8 @@
 
 @property( nonatomic, strong ) UISegmentedControl *commandControl;
 @property( nonatomic, strong ) UILabel *commandLabel;
-@property( nonatomic, strong ) TurtleCanvasView *demoView;
+@property( nonatomic, strong ) TurtleCanvasView *canvasView;
+@property( nonatomic, strong ) TurtleDemoView *demoView;
 
 @property( nonatomic, strong ) TurtleBezierPath *path;
 @property( nonatomic, strong ) TurtleBezierPath *previewPath;
@@ -36,9 +38,16 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.demoView = [[ TurtleCanvasView alloc ] initWithFrame:self.view.bounds ];
+    self.canvasView = [[ TurtleCanvasView alloc ] initWithFrame:self.view.bounds ];
+    self.canvasView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [ self.view addSubview:self.canvasView ];
+    
+    /*
+    self.demoView = [[ TurtleDemoView alloc ] initWithFrame:self.view.bounds ];
     self.demoView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.demoView.backgroundColor = [ UIColor clearColor ];
     [ self.view addSubview:self.demoView ];
+    */
     
     [ self initDemoApp ];
 }
@@ -128,7 +137,7 @@
     
     self.previewPath = [ self.path copy ];
     
-    self.demoView.strokeColour = [ UIColor blackColor ];
+    self.canvasView.strokeColour = [ UIColor blackColor ];
 }
 
 -(void)selectCommmandAtIndex:(NSInteger)index
@@ -175,7 +184,7 @@
         [ self.previewPath rightArc:self.value0 turn:self.value1 ];
     }
     
-    self.demoView.path = self.previewPath;
+    self.canvasView.path = self.previewPath;
     
 }
 
@@ -199,49 +208,5 @@
     }
 }
 
-
-#pragma mark - Demo pattern
-
--(void)drawDemoPattern
-{
-    self.demoView.fillColour = [ UIColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f ];
-    self.demoView.strokeColour = [ UIColor whiteColor ];
-    self.demoView.path = [ self demoPath ];
-}
-
-
--(TurtleBezierPath *)demoPath
-{
-    TurtleBezierPath *turtlePath = [ TurtleBezierPath new ];
-    
-    [ turtlePath home ];
-    [ turtlePath up ];
-    [ turtlePath forward:100.0f ];
-    [ turtlePath down ];
-    
-    for( NSInteger i = 0; i < 400; i++ )
-    {
-        CGFloat scale = 1 - (CGFloat)i / 400.0f;
-        
-        [ turtlePath rightArc:20.0f * scale turn:200.0f ];
-        [ turtlePath turn:-180.0f ];
-    }
-    
-    turtlePath.lineWidth = 1.0f;
-    
-    TurtleBezierPath *clone = [ turtlePath copy ];
-    
-    NSData *cloneData = [ NSKeyedArchiver archivedDataWithRootObject:clone ];
-    TurtleBezierPath *unarchivedPath = [ NSKeyedUnarchiver unarchiveObjectWithData:cloneData ];
-    
-    return unarchivedPath;
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end
