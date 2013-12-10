@@ -44,7 +44,7 @@
     [ self.demoView addGestureRecognizer:tap ];
     
     self.commandLabel = [ UILabel new ];
-    self.commandLabel.font = [ UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0f ];
+    self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:18.0f ];
     self.commandLabel.textAlignment = NSTextAlignmentCenter;
     self.commandLabel.textColor = [ UIColor blackColor ];
     self.commandLabel.text = @"commandLabel";
@@ -186,11 +186,11 @@
     
     if( index > 1 )
     {
-        self.commandLabel.text = [ NSString stringWithFormat:@"%@:%g turn:%g", commandTitle, self.value0, self.value1 ];
+        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g turn:%g ]", commandTitle, self.value0, self.value1 ];
     }
     else
     {
-        self.commandLabel.text = [ NSString stringWithFormat:@"%@:%g", commandTitle, self.value0 ];
+        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g ]", commandTitle, self.value0 ];
     }
 }
 
