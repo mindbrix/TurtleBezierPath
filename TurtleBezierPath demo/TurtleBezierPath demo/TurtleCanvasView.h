@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class TurtleBezierPath;
+#import "TurtleBezierPath.h"
 
 
 @interface TurtleCanvasView : UIView

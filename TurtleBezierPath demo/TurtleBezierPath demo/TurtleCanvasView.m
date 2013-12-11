@@ -8,8 +8,6 @@
 
 #import "TurtleCanvasView.h"
 
-#import "TurtleBezierPath.h"
-
 
 @implementation TurtleCanvasView
 

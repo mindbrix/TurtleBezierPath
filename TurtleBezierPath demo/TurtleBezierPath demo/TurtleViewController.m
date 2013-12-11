@@ -12,6 +12,7 @@
 
 #import "TurtleCanvasView.h"
 #import "TurtleDemoPatternView.h"
+#import "TurtleDemoPointerView.h"
 #import "TurtleBezierPath.h"
 
 
@@ -20,7 +21,7 @@
 @property( nonatomic, strong ) UISegmentedControl *commandControl;
 @property( nonatomic, strong ) UILabel *commandLabel;
 @property( nonatomic, strong ) TurtleCanvasView *canvasView;
-@property( nonatomic, strong ) TurtleCanvasView *pointerView;
+@property( nonatomic, strong ) TurtleDemoPointerView *pointerView;
 
 @property( nonatomic, strong ) TurtleBezierPath *path;
 @property( nonatomic, strong ) TurtleBezierPath *previewPath;
@@ -127,10 +128,7 @@
     self.canvasView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [ self.view addSubview:self.canvasView ];
     
-    self.pointerView = [[ TurtleCanvasView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, 40.0f, 40.0f )];
-    self.pointerView.backgroundColor = [ UIColor clearColor ];
-    self.pointerView.strokeColour = [ UIColor redColor ];
-    self.pointerView.path = [ self pointerPath ];
+    self.pointerView = [[ TurtleDemoPointerView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, 40.0f, 40.0f )];
     [ self.view addSubview:self.pointerView ];
     
     
@@ -170,43 +168,11 @@
     self.previewPath = [ self.path copy ];
 }
 
-
--(TurtleBezierPath *)pointerPath
-{
-    TurtleBezierPath *path = [ TurtleBezierPath new ];
-
-    path.lineCapStyle = kCGLineCapRound;
-    path.lineWidth = 2.0;
-    
-    [ path home ];
-    [ path forward:0.01f ];
-    
-    [ path up ];
-    
-    [ path home ];
-    [ path forward: 20.0f ];
-    [ path turn:180.0f ];
-    [ path down ];
-    [ path leftArc:40.f turn:30.0f ];
-    
-    [ path up ];
-    
-    [ path home ];
-    [ path forward: 20.0f ];
-    [ path turn:180.0f ];
-    [ path down ];
-    [ path rightArc:40.f turn:30.0f ];
-    
-    return path;
-}
-
 -(void)positionPointer
 {
-    TurtleBezierPath *centredPath = [ self.previewPath copy ];
-    [ centredPath centreInBounds:self.view.bounds ];
-    
-    self.pointerView.center = centredPath.currentPoint;
-    self.pointerView.transform = CGAffineTransformMakeRotation( centredPath.bearing * M_PI / 180.0f );
+    TurtleBezierPath *pointerPath = [ self.previewPath copy ];
+    [ pointerPath centreInBounds:self.view.bounds ];
+    [ self.pointerView positionPointerOnPath:pointerPath ];
 }
 
 -(void)selectCommmandAtIndex:(NSInteger)index
@@ -265,7 +231,6 @@
     self.canvasView.path = self.previewPath;
     
     [ self positionPointer ];
-    self.pointerView.alpha = ( self.previewPath.penUp ) ? 0.333f : 1.0f;
     
     NSString *downUp = ( self.previewPath.penUp ) ? @"down" : @"up";
     [ self.commandControl setTitle:downUp forSegmentAtIndex:4 ];
