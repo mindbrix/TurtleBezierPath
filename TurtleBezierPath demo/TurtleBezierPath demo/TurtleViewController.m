@@ -31,7 +31,12 @@
 
 @end
 
+
 @implementation TurtleViewController
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
 
 - (void)viewDidLoad
 {
@@ -63,64 +68,7 @@
     [ self layoutViews ];
 }
 
-
-#pragma mark - Layout
-
--(void)layoutViews
-{
-    self.commandLabel.frame = CGRectMake( 0.0f, 20.0f, self.view.bounds.size.width, self.commandLabel.font.pointSize * 1.5f );
-    
-    self.valueSlider0.frame  = self.valueSlider1.frame = CGRectMake( 0.0, 0.0, self.commandControl.bounds.size.width, self.valueSlider0.bounds.size.height );
-    
-    CGFloat originY = self.view.bounds.size.height;
-    
-    for( UIView *view in @[ self.valueSlider1, self.valueSlider0, self.commandControl ])
-    {
-        view.frame = CGRectMake(( self.view.bounds.size.width - view.bounds.size.width ) / 2.0f, originY - view.bounds.size.height, view.bounds.size.width, view.bounds.size.height );
-        
-        originY = view.frame.origin.y;
-    }
-    
-    [ self positionPointer ];
-}
-
-
-#pragma mark - UIResponder
-
-- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
-{
-    if (motion == UIEventSubtypeMotionShake)
-    {
-        NSLog(@"Shaking!!!");
-        
-        [ self initPath ];
-        
-        self.commandControl.selectedSegmentIndex = -1;
-        
-        [ self selectCommmandAtIndex:-1 ];
-    }
-}
-
-
-#pragma mark - Controls
-
--(void)commmandSelected:(id)sender
-{
-    [ self selectCommmandAtIndex:self.commandControl.selectedSegmentIndex ];
-}
-
--(void)sliderValueChanged0:(id)sender
-{
-    [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
-}
-
--(void)sliderValueChanged1:(id)sender
-{
-   [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
-}
-
-
-#pragma mark - Demo app
+#pragma mark - Init
 
 -(void)initDemoApp
 {
@@ -130,7 +78,6 @@
     
     self.pointerView = [[ TurtleDemoPointerView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, 40.0f, 40.0f )];
     [ self.view addSubview:self.pointerView ];
-    
     
     self.commandLabel = [ UILabel new ];
     self.commandLabel.backgroundColor = [ UIColor clearColor ];
@@ -168,17 +115,64 @@
     self.previewPath = [ self.path copy ];
 }
 
--(void)positionPointer
+#pragma mark - Layout
+
+-(void)layoutViews
 {
-    TurtleBezierPath *pointerPath = [ self.previewPath copy ];
-    [ pointerPath centreInBounds:self.view.bounds ];
-    [ self.pointerView positionPointerOnPath:pointerPath ];
+    self.commandLabel.frame = CGRectMake( 0.0f, 20.0f, self.view.bounds.size.width, self.commandLabel.font.pointSize * 1.5f );
+    
+    self.valueSlider0.frame  = self.valueSlider1.frame = CGRectMake( 0.0, 0.0, self.commandControl.bounds.size.width, self.valueSlider0.bounds.size.height );
+    
+    CGFloat originY = self.view.bounds.size.height;
+    
+    for( UIView *view in @[ self.valueSlider1, self.valueSlider0, self.commandControl ])
+    {
+        view.frame = CGRectMake(( self.view.bounds.size.width - view.bounds.size.width ) / 2.0f, originY - view.bounds.size.height, view.bounds.size.width, view.bounds.size.height );
+        
+        originY = view.frame.origin.y;
+    }
+    
+    [ self positionPointer ];
 }
 
--(void)selectCommmandAtIndex:(NSInteger)index
+/*
+#pragma mark - UIResponder
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
-    self.path = self.previewPath;
-    
+    if (motion == UIEventSubtypeMotionShake)
+    {
+        NSLog(@"Shaking!!!");
+        
+        [ self initPath ];
+        
+        self.commandControl.selectedSegmentIndex = -1;
+        
+        [ self selectCommmandAtIndex:-1 ];
+    }
+}
+*/
+
+
+#pragma mark - Controls
+
+-(void)commmandSelected:(id)sender
+{
+    [ self selectCommmandAtIndex:self.commandControl.selectedSegmentIndex ];
+}
+
+-(void)sliderValueChanged0:(id)sender
+{
+    [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
+}
+
+-(void)sliderValueChanged1:(id)sender
+{
+   [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
+}
+
+-(void)setupSlidersForIndex:(NSInteger)index
+{
     self.valueSlider0.hidden = !( index >= 0 && index < 4 );
     self.valueSlider1.hidden = !( index > 1 && index < 4 );
     
@@ -189,6 +183,32 @@
     
     self.valueSlider0.rounding = ( index == 1 ) ? 5.0f : 1.0f;
     self.valueSlider1.rounding = 5.0f;
+}
+
+#pragma mark - Undo
+
+-(void)performUndo:(id)object
+{
+    self.canvasView.path = (TurtleBezierPath *)object;
+}
+
+
+#pragma mark - Pointer
+
+-(void)positionPointer
+{
+    TurtleBezierPath *pointerPath = [ self.previewPath copy ];
+    [ pointerPath centreInBounds:self.view.bounds ];
+    [ self.pointerView positionPointerOnPath:pointerPath ];
+}
+
+-(void)selectCommmandAtIndex:(NSInteger)index
+{
+    //[ self.undoManager registerUndoWithTarget:self selector:@selector(performUndo:) object:self.previewPath ];
+    
+    self.path = self.previewPath;
+    
+    [ self setupSlidersForIndex:index ];
     
     [ self updateCommandForIndex:index ];
 }
@@ -196,37 +216,15 @@
 
 -(void)updateCommandForIndex:(NSInteger)index
 {
-    [ self updateCommandLabelForIndex:index ];
+    if( index >= 0 )
+    {
+        NSString *commandTitle = [ self.commandControl titleForSegmentAtIndex:index ];
+        self.commandLabel.text = [ self commandStringForIndex:index title:commandTitle value0:self.valueSlider0.value value1:self.valueSlider1.value ];
+    }
     
     self.previewPath = [ self.path copy ];
     
-    if( index == 0 && self.valueSlider0.value > 0.0f )
-    {
-        [ self.previewPath forward:self.valueSlider0.value ];
-    }
-    else if( index == 1 && self.valueSlider0.value > 0.0f )
-    {
-        [ self.previewPath turn:self.valueSlider0.value ];
-    }
-    else if( index == 2 && self.valueSlider0.value > 0.0f && self.valueSlider1.value > 0.0f )
-    {
-        [ self.previewPath leftArc:self.valueSlider0.value turn:self.valueSlider1.value ];
-    }
-    else if( index == 3 && self.valueSlider0.value > 0.0f && self.valueSlider1.value > 0.0f )
-    {
-        [ self.previewPath rightArc:self.valueSlider0.value turn:self.valueSlider1.value ];
-    }
-    else if( index == 4 )
-    {
-        if( self.previewPath.penUp )
-        {
-            [ self.previewPath down ];
-        }
-        else
-        {
-            [ self.previewPath up ];
-        }
-    }
+    [ self drawCommandForIndex:index value0:self.valueSlider0.value value1:self.valueSlider1.value ontoPath:self.previewPath ];
     
     self.canvasView.path = self.previewPath;
     
@@ -236,27 +234,57 @@
     [ self.commandControl setTitle:downUp forSegmentAtIndex:4 ];
 }
 
--(void)updateCommandLabelForIndex:(NSInteger)index
+
+#pragma mark - Turtle Commands
+
+-(NSString *)commandStringForIndex:(NSInteger)index title:(NSString *)title value0:(CGFloat)value0 value1:(CGFloat)value1
 {
     if( index < 0 )
     {
-        self.commandLabel.text = nil;
-        return;
+        return nil;
     }
-    
-    NSString *commandTitle = [ self.commandControl titleForSegmentAtIndex:index ];
-    
-    if( index < 2 )
+    else if( index < 2 )
     {
-        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g ]", commandTitle, self.valueSlider0.value ];
+        return [ NSString stringWithFormat:@"[ path %@:%g ]", title, value0 ];
     }
     else if( index < 4 )
     {
-        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@:%g turn:%g ]", commandTitle, self.valueSlider0.value, self.valueSlider1.value ];
+        return [ NSString stringWithFormat:@"[ path %@:%g turn:%g ]", title, value0, value1 ];
     }
     else
     {
-        self.commandLabel.text = [ NSString stringWithFormat:@"[ path %@ ]", commandTitle ];
+        return [ NSString stringWithFormat:@"[ path %@ ]", title ];
+    }
+}
+
+-(void)drawCommandForIndex:(NSInteger)index value0:(CGFloat)value0 value1:(CGFloat)value1 ontoPath:(TurtleBezierPath *)path
+{
+    if( index == 0 && value0 > 0.0f )
+    {
+        [ path forward:value0 ];
+    }
+    else if( index == 1 && value0 > 0.0f )
+    {
+        [ path turn:value0 ];
+    }
+    else if( index == 2 && value0 > 0.0f && value1 > 0.0f )
+    {
+        [ path leftArc:value0 turn:value1 ];
+    }
+    else if( index == 3 && value0 > 0.0f && value1 > 0.0f )
+    {
+        [ path rightArc:value0 turn:value1 ];
+    }
+    else if( index == 4 )
+    {
+        if( path.penUp )
+        {
+            [ path down ];
+        }
+        else
+        {
+            [ path up ];
+        }
     }
 }
 

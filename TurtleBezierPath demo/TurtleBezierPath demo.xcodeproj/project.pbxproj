@@ -129,6 +129,7 @@
 		A64AA09818559841006A2736 /* TurtleBezierPath demo */ = {
 			isa = PBXGroup;
 			children = (
+				A6985CCF1858D4FE00AF0F19 /* TurtleBezierPath */,
 				A64AA0A118559841006A2736 /* TurtleAppDelegate.h */,
 				A64AA0A218559841006A2736 /* TurtleAppDelegate.m */,
 				A64AA0A418559841006A2736 /* Main_iPhone.storyboard */,
@@ -139,14 +140,12 @@
 				A64AA09918559841006A2736 /* Supporting Files */,
 				A64AA0CA1855B947006A2736 /* TurtleDemoPatternView.h */,
 				A64AA0CB1855B947006A2736 /* TurtleDemoPatternView.m */,
-				A64AA0CD1855BA41006A2736 /* TurtleBezierPath.h */,
-				A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */,
+				A6985CCC1858CC0200AF0F19 /* TurtleDemoPointerView.h */,
+				A6985CCD1858CC0200AF0F19 /* TurtleDemoPointerView.m */,
 				A64AA0D718565F8A006A2736 /* TurtleCanvasView.h */,
 				A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */,
 				A655667D18574FCC0066C4CF /* RoundedUISlider.h */,
 				A655667E18574FCC0066C4CF /* RoundedUISlider.m */,
-				A6985CCC1858CC0200AF0F19 /* TurtleDemoPointerView.h */,
-				A6985CCD1858CC0200AF0F19 /* TurtleDemoPointerView.m */,
 			);
 			path = "TurtleBezierPath demo";
 			sourceTree = "<group>";
@@ -178,6 +177,15 @@
 				A64AA0BD18559841006A2736 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A6985CCF1858D4FE00AF0F19 /* TurtleBezierPath */ = {
+			isa = PBXGroup;
+			children = (
+				A64AA0CD1855BA41006A2736 /* TurtleBezierPath.h */,
+				A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */,
+			);
+			name = TurtleBezierPath;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
