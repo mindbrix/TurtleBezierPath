@@ -45,6 +45,15 @@
     clone.miterLimit = self.miterLimit;
     clone.flatness = self.flatness;
     clone.usesEvenOddFillRule = self.usesEvenOddFillRule;
+    
+    CGFloat phase;
+    NSInteger count;
+    [ self getLineDash:nil count:&count phase:&phase ];
+    CGFloat *lineDash = malloc( count * sizeof( CGFloat ));
+    [ self getLineDash:lineDash count:&count phase:&phase ];
+    [ clone setLineDash:lineDash count:count phase:phase ];
+    free( lineDash );
+    
     clone.bearing = self.bearing;
     clone.penUp = self.penUp;
     
