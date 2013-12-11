@@ -26,4 +26,19 @@
 }
 
 
+-(BOOL)isEqual:(id)object
+{
+    TurtleDemoState *aState = object;
+    
+    if( self.index == aState.index && self.value0 == aState.value0 && self.value1 == aState.value1 )
+    {
+        NSData *selfPathData = [ NSKeyedArchiver archivedDataWithRootObject:self.path ];
+        NSData *aStatePathData = [ NSKeyedArchiver archivedDataWithRootObject:aState.path ];
+        
+        return [ selfPathData isEqualToData:aStatePathData ];
+    }
+    
+    return NO;
+}
+
 @end

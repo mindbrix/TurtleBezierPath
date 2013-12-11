@@ -13,6 +13,7 @@
 #import "TurtleCanvasView.h"
 #import "TurtleDemoPatternView.h"
 #import "TurtleDemoPointerView.h"
+#import "TurtleDemoState.h"
 #import "TurtleBezierPath.h"
 
 
@@ -211,6 +212,17 @@
     [ self setupSlidersForIndex:index ];
     
     [ self updateCommandForIndex:index ];
+}
+
+
+-(TurtleDemoState *)currentState
+{
+    return [[ TurtleDemoState alloc ] initWithIndex:self.commandControl.selectedSegmentIndex path:self.previewPath value0:self.valueSlider0.value value1:self.valueSlider1.value ];
+}
+
+-(void)setState:(TurtleDemoState *)state
+{
+    
 }
 
 

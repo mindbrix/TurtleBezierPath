@@ -17,4 +17,6 @@
 @property( nonatomic, readonly ) CGFloat value0;
 @property( nonatomic, readonly ) CGFloat value1;
 
+-(instancetype)initWithIndex:(NSInteger)index path:(TurtleBezierPath *)path value0:(NSInteger)value0 value1:(NSInteger)value1;
+
 @end
