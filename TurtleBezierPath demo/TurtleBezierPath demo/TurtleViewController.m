@@ -50,7 +50,7 @@
 {
     [ super viewWillAppear:animated ];
     
-    [ self becomeFirstResponder ];
+    //[ self becomeFirstResponder ];
     
     [ self layoutViews ];
 }

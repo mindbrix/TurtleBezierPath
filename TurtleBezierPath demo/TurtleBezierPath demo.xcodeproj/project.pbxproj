@@ -27,6 +27,7 @@
 		A64AA0D918565F8A006A2736 /* TurtleCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */; };
 		A655667F18574FCC0066C4CF /* RoundedUISlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A655667E18574FCC0066C4CF /* RoundedUISlider.m */; };
 		A6985CCE1858CC0200AF0F19 /* TurtleDemoPointerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6985CCD1858CC0200AF0F19 /* TurtleDemoPointerView.m */; };
+		A6985CD21858FD7D00AF0F19 /* TurtleDemoState.m in Sources */ = {isa = PBXBuildFile; fileRef = A6985CD11858FD7D00AF0F19 /* TurtleDemoState.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		A655667E18574FCC0066C4CF /* RoundedUISlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundedUISlider.m; sourceTree = "<group>"; };
 		A6985CCC1858CC0200AF0F19 /* TurtleDemoPointerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleDemoPointerView.h; sourceTree = "<group>"; };
 		A6985CCD1858CC0200AF0F19 /* TurtleDemoPointerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleDemoPointerView.m; sourceTree = "<group>"; };
+		A6985CD01858FD7D00AF0F19 /* TurtleDemoState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleDemoState.h; sourceTree = "<group>"; };
+		A6985CD11858FD7D00AF0F19 /* TurtleDemoState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleDemoState.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +149,8 @@
 				A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */,
 				A655667D18574FCC0066C4CF /* RoundedUISlider.h */,
 				A655667E18574FCC0066C4CF /* RoundedUISlider.m */,
+				A6985CD01858FD7D00AF0F19 /* TurtleDemoState.h */,
+				A6985CD11858FD7D00AF0F19 /* TurtleDemoState.m */,
 			);
 			path = "TurtleBezierPath demo";
 			sourceTree = "<group>";
@@ -292,6 +297,7 @@
 				A655667F18574FCC0066C4CF /* RoundedUISlider.m in Sources */,
 				A6985CCE1858CC0200AF0F19 /* TurtleDemoPointerView.m in Sources */,
 				A64AA0A318559841006A2736 /* TurtleAppDelegate.m in Sources */,
+				A6985CD21858FD7D00AF0F19 /* TurtleDemoState.m in Sources */,
 				A64AA09F18559841006A2736 /* main.m in Sources */,
 				A64AA0CC1855B947006A2736 /* TurtleDemoPatternView.m in Sources */,
 				A64AA0CF1855BA41006A2736 /* TurtleBezierPath.m in Sources */,
