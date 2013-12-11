@@ -79,6 +79,15 @@
     self.canvasView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [ self.view addSubview:self.canvasView ];
     
+    UIScreenEdgePanGestureRecognizer *undoSwipe = [[ UIScreenEdgePanGestureRecognizer alloc ] initWithTarget:self action:@selector(performUndo:)];
+    undoSwipe.edges = UIRectEdgeLeft;
+    [ self.canvasView addGestureRecognizer:undoSwipe ];
+    
+    UIScreenEdgePanGestureRecognizer *redoSwipe = [[ UIScreenEdgePanGestureRecognizer alloc ] initWithTarget:self action:@selector(performRedo:)];
+    redoSwipe.edges = UIRectEdgeRight;
+    [ self.canvasView addGestureRecognizer:redoSwipe ];
+    
+    
     self.pointerView = [[ TurtleDemoPointerView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, 40.0f, 40.0f )];
     [ self.view addSubview:self.pointerView ];
     
@@ -103,12 +112,14 @@
     [ self.valueSlider1 addTarget:self action:@selector(sliderValueChanged1:) forControlEvents:UIControlEventValueChanged ];
     [ self.view addSubview:self.valueSlider1 ];
     
-    //[ self selectCommmandAtIndex: -1 ];
+    [ self selectCommmandAtIndex: -1 ];
     
     [ self initPath ];
     
-    [ self setUndoState:[ self currentState ]];
-    //self.undoComparisonState = [ self currentState ];
+    self.undoComparisonState = [ self currentState ];
+    
+    //NSTimer *undoTimer = [ NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(undoTimerFired) userInfo:nil repeats:YES ];
+    //[[ NSRunLoop currentRunLoop ] addTimer:undoTimer forMode:NSRunLoopCommonModes ];
 }
 
 
@@ -215,11 +226,13 @@
 
 -(void)setUndoState:(TurtleDemoState *)newState
 {
+    NSLog( @"setUndoState" );
+    
     if( ![ newState isEqual:self.undoComparisonState ])
     {
-        NSLog( @"registerUndoWithTarget: %@", [ self currentState ]);
+        NSLog( @"registerUndoWithTarget: %@", self.undoComparisonState );
         
-        [ self.undoManager registerUndoWithTarget:self selector:@selector(setUndoState:) object:[ self currentState ]];
+        [ self.undoManager registerUndoWithTarget:self selector:@selector(setUndoState:) object:self.undoComparisonState ];
         //[undoManager setActionName:NSLocalizedString(@"Title Change", @"title undo")];
         
         self.undoComparisonState = newState;
@@ -227,6 +240,29 @@
     }
 }
 
+-(void)performRedo:(UIScreenEdgePanGestureRecognizer *)redoSwipe
+{
+    if( redoSwipe.state == UIGestureRecognizerStateBegan )
+    {
+        [ self.undoManager redo ];
+    }
+}
+
+-(void)performUndo:(UIScreenEdgePanGestureRecognizer *)undoSwipe
+{
+    if( undoSwipe.state == UIGestureRecognizerStateBegan )
+    {
+        [ self.undoManager undo ];
+    }
+}
+
+
+-(void)undoTimerFired
+{
+    NSLog( @"undoTimerFired" );
+    
+    [ self setUndoState:[ self currentState ]];
+}
 
 #pragma mark - Pointer
 
