@@ -27,6 +27,8 @@
 @property( nonatomic, strong ) TurtleBezierPath *path;
 @property( nonatomic, strong ) TurtleBezierPath *previewPath;
 
+@property( nonatomic, strong ) TurtleDemoState *undoComparisonState;
+
 @property( nonatomic, strong ) RoundedUISlider *valueSlider0;
 @property( nonatomic, strong ) RoundedUISlider *valueSlider1;
 
@@ -51,7 +53,7 @@
 {
     [ super viewWillAppear:animated ];
     
-    //[ self becomeFirstResponder ];
+    [ self becomeFirstResponder ];
     
     [ self layoutViews ];
 }
@@ -101,9 +103,12 @@
     [ self.valueSlider1 addTarget:self action:@selector(sliderValueChanged1:) forControlEvents:UIControlEventValueChanged ];
     [ self.view addSubview:self.valueSlider1 ];
     
-    [ self selectCommmandAtIndex: -1 ];
+    //[ self selectCommmandAtIndex: -1 ];
     
     [ self initPath ];
+    
+    [ self setUndoState:[ self currentState ]];
+    //self.undoComparisonState = [ self currentState ];
 }
 
 
@@ -186,11 +191,40 @@
     self.valueSlider1.rounding = 5.0f;
 }
 
+
 #pragma mark - Undo
 
--(void)performUndo:(id)object
+-(TurtleDemoState *)currentState
 {
-    self.canvasView.path = (TurtleBezierPath *)object;
+    return [[ TurtleDemoState alloc ] initWithIndex:self.commandControl.selectedSegmentIndex path:self.path previewPath:self.previewPath value0:self.valueSlider0.value value1:self.valueSlider1.value ];
+}
+
+-(void)setState:(TurtleDemoState *)newState
+{
+    NSLog( @"setState: %@", newState );
+    
+    self.commandControl.selectedSegmentIndex = newState.index;
+    self.path = newState.path;
+    self.previewPath = newState.previewPath;
+    [ self setupSlidersForIndex:newState.index ];
+    self.valueSlider0.value = newState.value0;
+    self.valueSlider1.value = newState.value1;
+    
+    [ self showState ];
+}
+
+-(void)setUndoState:(TurtleDemoState *)newState
+{
+    if( ![ newState isEqual:self.undoComparisonState ])
+    {
+        NSLog( @"registerUndoWithTarget: %@", [ self currentState ]);
+        
+        [ self.undoManager registerUndoWithTarget:self selector:@selector(setUndoState:) object:[ self currentState ]];
+        //[undoManager setActionName:NSLocalizedString(@"Title Change", @"title undo")];
+        
+        self.undoComparisonState = newState;
+        [ self setState:newState ];
+    }
 }
 
 
@@ -205,39 +239,33 @@
 
 -(void)selectCommmandAtIndex:(NSInteger)index
 {
-    //[ self.undoManager registerUndoWithTarget:self selector:@selector(performUndo:) object:self.previewPath ];
-    
     self.path = self.previewPath;
+    [ self setUndoState:[ self currentState ]];
     
     [ self setupSlidersForIndex:index ];
     
     [ self updateCommandForIndex:index ];
 }
 
-
--(TurtleDemoState *)currentState
-{
-    return [[ TurtleDemoState alloc ] initWithIndex:self.commandControl.selectedSegmentIndex path:self.previewPath value0:self.valueSlider0.value value1:self.valueSlider1.value ];
-}
-
--(void)setState:(TurtleDemoState *)state
-{
-    
-}
-
-
 -(void)updateCommandForIndex:(NSInteger)index
 {
+    self.previewPath = [ self.path copy ];
+    
+    [ self drawCommandForIndex:index value0:self.valueSlider0.value value1:self.valueSlider1.value ontoPath:self.previewPath ];
+    
+    [ self showState ];
+}
+
+-(void)showState
+{
+    NSInteger index = self.commandControl.selectedSegmentIndex;
+    
     if( index >= 0 )
     {
         NSString *commandTitle = [ self.commandControl titleForSegmentAtIndex:index ];
         self.commandLabel.text = [ self commandStringForIndex:index title:commandTitle value0:self.valueSlider0.value value1:self.valueSlider1.value ];
     }
-    
-    self.previewPath = [ self.path copy ];
-    
-    [ self drawCommandForIndex:index value0:self.valueSlider0.value value1:self.valueSlider1.value ontoPath:self.previewPath ];
-    
+
     self.canvasView.path = self.previewPath;
     
     [ self positionPointer ];
@@ -245,6 +273,7 @@
     NSString *downUp = ( self.previewPath.penUp ) ? @"down" : @"up";
     [ self.commandControl setTitle:downUp forSegmentAtIndex:4 ];
 }
+
 
 
 #pragma mark - Turtle Commands

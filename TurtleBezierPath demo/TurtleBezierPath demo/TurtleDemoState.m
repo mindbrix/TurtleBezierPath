@@ -10,7 +10,7 @@
 
 @implementation TurtleDemoState
 
--(instancetype)initWithIndex:(NSInteger)index path:(TurtleBezierPath *)path value0:(NSInteger)value0 value1:(NSInteger)value1
+-(instancetype)initWithIndex:(NSInteger)index path:(TurtleBezierPath *)path previewPath:(TurtleBezierPath *)previewPath value0:(NSInteger)value0 value1:(NSInteger)value1
 {
     self = [ super init ];
     
@@ -18,6 +18,7 @@
     {
         _index = index;
         _path = path;
+        _previewPath = previewPath;
         _value0 = value0;
         _value1 = value1;
     }
@@ -30,15 +31,16 @@
 {
     TurtleDemoState *aState = object;
     
-    if( self.index == aState.index && self.value0 == aState.value0 && self.value1 == aState.value1 )
-    {
-        NSData *selfPathData = [ NSKeyedArchiver archivedDataWithRootObject:self.path ];
-        NSData *aStatePathData = [ NSKeyedArchiver archivedDataWithRootObject:aState.path ];
-        
-        return [ selfPathData isEqualToData:aStatePathData ];
-    }
-    
-    return NO;
+    return ( self.index == aState.index &&
+                self.value0 == aState.value0 &&
+                self.value1 == aState.value1 &&
+                [ self.path isEqual:aState.path ] &&
+                [ self.previewPath isEqual:aState.previewPath ]);
+}
+
+-(NSString *)description
+{
+    return [ NSString stringWithFormat:@"index = %d, path = %@, previewPath = %@, value0 = %g, value1 = %g", self.index, self.path, self.previewPath, self.value0, self.value1 ];
 }
 
 @end

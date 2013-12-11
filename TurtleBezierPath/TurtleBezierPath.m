@@ -90,6 +90,12 @@
 
 #pragma mark - Public methods
 
+-(BOOL)isEqual:(TurtleBezierPath *)aPath
+{
+    return [ self.description isEqualToString:aPath.description ];
+    //return [[ NSKeyedArchiver archivedDataWithRootObject:self ] isEqualToData:[ NSKeyedArchiver archivedDataWithRootObject:object ]];
+}
+
 -(void)home
 {
     [ self moveToPoint:CGPointZero ];
