@@ -102,7 +102,7 @@
     self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:18.0f ];
     self.commandLabel.textAlignment = NSTextAlignmentCenter;
     self.commandLabel.textColor = [ UIColor blackColor ];
-    self.commandLabel.text = @"commandLabel";
+    self.commandLabel.text = @"";
     [ self.view addSubview:self.commandLabel ];
     
     self.commandControl = [[ UISegmentedControl alloc ] initWithItems:@[ @"forward", @"turn", @"leftArc", @"rightArc", @"up" ]];
@@ -327,7 +327,6 @@
     NSString *downUp = ( self.previewPath.penUp ) ? @"down" : @"up";
     [ self.commandControl setTitle:downUp forSegmentAtIndex:4 ];
 }
-
 
 
 #pragma mark - Turtle Commands
