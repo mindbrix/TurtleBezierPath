@@ -92,8 +92,7 @@
 
 -(BOOL)isEqual:(TurtleBezierPath *)aPath
 {
-    return [ self.description isEqualToString:aPath.description ];
-    //return [[ NSKeyedArchiver archivedDataWithRootObject:self ] isEqualToData:[ NSKeyedArchiver archivedDataWithRootObject:object ]];
+    return [[ NSKeyedArchiver archivedDataWithRootObject:self ] isEqualToData:[ NSKeyedArchiver archivedDataWithRootObject:aPath ]];
 }
 
 -(void)home
