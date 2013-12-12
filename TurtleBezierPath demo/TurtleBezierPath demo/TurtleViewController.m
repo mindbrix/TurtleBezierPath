@@ -317,11 +317,8 @@
 {
     NSInteger index = self.commandControl.selectedSegmentIndex;
     
-    if( index >= 0 )
-    {
-        NSString *commandTitle = [ self.commandControl titleForSegmentAtIndex:index ];
-        self.commandLabel.text = [ self commandStringForIndex:index title:commandTitle value0:self.valueSlider0.value value1:self.valueSlider1.value ];
-    }
+    NSString *commandTitle = ( index >= 0 ) ? [ self.commandControl titleForSegmentAtIndex:index ] : nil;
+    self.commandLabel.text = [ self commandStringForIndex:index title:commandTitle value0:self.valueSlider0.value value1:self.valueSlider1.value ];
 
     self.canvasView.path = self.previewPath;
     
