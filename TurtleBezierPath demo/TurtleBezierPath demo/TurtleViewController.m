@@ -63,7 +63,8 @@
     [ self layoutViews ];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
     // No longer need to receive the shake gesture event since the view is gone
     [self resignFirstResponder];
     
@@ -92,7 +93,6 @@
     redoSwipe.edges = UIRectEdgeRight;
     [ self.canvasView addGestureRecognizer:redoSwipe ];
     
-    
     self.pointerView = [[ TurtleDemoPointerView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, 40.0f, 40.0f )];
     [ self.view addSubview:self.pointerView ];
     
@@ -105,7 +105,6 @@
     [ self.view addSubview:self.commandLabel ];
     
     self.commandControl = [[ UISegmentedControl alloc ] initWithItems:@[ @"forward", @"turn", @"leftArc", @"rightArc", @"up" ]];
-    self.commandControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [ self.commandControl addTarget:self action:@selector(commmandSelected:) forControlEvents:UIControlEventValueChanged ];
     [ self.view addSubview:self.commandControl ];
     
@@ -203,9 +202,11 @@
     self.valueSlider0.hidden = !( index >= 0 && index < 4 );
     self.valueSlider1.hidden = !( index > 1 && index < 4 );
     
+    CGFloat maximumLength = MIN( self.view.bounds.size.width, self.view.bounds.size.height ) / 2.0f;
+    
     self.valueSlider0.value = 0.0f;
     self.valueSlider1.value = ( index > 1 ) ? 90.0f : 0.0f;
-    self.valueSlider0.maximumValue = ( index == 1 ) ? 360.0f : 100.0f;
+    self.valueSlider0.maximumValue = ( index == 1 ) ? 360.0f : maximumLength;
     self.valueSlider1.maximumValue = 360.0f;
     
     self.valueSlider0.rounding = ( index == 1 ) ? 5.0f : 1.0f;
@@ -279,7 +280,7 @@
 {
     self.undoTimer = nil;
     
-    [ self setUndoState:[ self currentState ]];
+    [ self setUndoState:self.currentState ];
 }
 
 
