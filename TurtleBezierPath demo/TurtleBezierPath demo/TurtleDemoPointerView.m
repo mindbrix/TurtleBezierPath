@@ -9,6 +9,7 @@
 #import "TurtleDemoPointerView.h"
 
 #import "TurtleBezierPath.h"
+#import "TurtleBezierPath+DemoPaths.h"
 
 
 @implementation TurtleDemoPointerView
@@ -21,40 +22,12 @@
     {
         self.backgroundColor = [ UIColor clearColor ];
         self.strokeColour = [ UIColor redColor ];
-        self.path = [ self pointerPath ];
+        self.path = [ TurtleBezierPath pointerPath ];
     }
     
     return self;
 }
 
--(TurtleBezierPath *)pointerPath
-{
-    TurtleBezierPath *path = [ TurtleBezierPath new ];
-    
-    path.lineCapStyle = kCGLineCapRound;
-    path.lineWidth = 2.0;
-    
-    [ path home ];
-    [ path forward:0.01f ];
-    
-    [ path up ];
-    
-    [ path home ];
-    [ path forward: 20.0f ];
-    [ path turn:180.0f ];
-    [ path down ];
-    [ path leftArc:40.f turn:30.0f ];
-    
-    [ path up ];
-    
-    [ path home ];
-    [ path forward: 20.0f ];
-    [ path turn:180.0f ];
-    [ path down ];
-    [ path rightArc:40.f turn:30.0f ];
-    
-    return path;
-}
 
 -(void)positionPointerOnPath:(TurtleBezierPath *)path
 {

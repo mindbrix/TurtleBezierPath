@@ -15,6 +15,7 @@
 #import "TurtleDemoPointerView.h"
 #import "TurtleDemoState.h"
 #import "TurtleBezierPath.h"
+#import "TurtleBezierPath+DemoPaths.h"
 
 
 @interface TurtleViewController ()
@@ -93,7 +94,7 @@
     redoSwipe.edges = UIRectEdgeRight;
     [ self.canvasView addGestureRecognizer:redoSwipe ];
     
-    self.pointerView = [[ TurtleDemoPointerView alloc ] initWithFrame:CGRectMake( 0.0f, 0.0f, 40.0f, 40.0f )];
+    self.pointerView = [[ TurtleDemoPointerView alloc ] initWithFrame:[ TurtleBezierPath pointerPath ].boundsForView ];
     [ self.view addSubview:self.pointerView ];
     
     self.commandLabel = [ UILabel new ];

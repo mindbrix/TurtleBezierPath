@@ -13,6 +13,9 @@
 @property( nonatomic, assign ) CGFloat bearing;
 @property( nonatomic, assign ) BOOL penUp;
 
+-(CGRect)boundsWithStroke;
+-(CGRect)boundsForView;
+
 -(void)home;
 -(void)forward:(CGFloat)distance;
 -(void)turn:(CGFloat)angle;
