@@ -14,16 +14,48 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        self.backgroundColor = [ UIColor whiteColor ];
-        self.strokeColour = [ UIColor blackColor ];
+    
+    if (self)
+    {
+        [ self setDefaults ];
     }
     return self;
 }
 
+-(id)initWithPath:(TurtleBezierPath *)path
+{
+    self = [super initWithFrame:[ path boundsForView ]];
+    
+    if (self)
+    {
+        [ self setDefaults ];
+        self.path = path;
+    }
+    return self;
+}
+
+-(void)setDefaults
+{
+    // Initialization code
+    self.backgroundColor = [ UIColor whiteColor ];
+    self.strokeColour = [ UIColor blackColor ];
+}
+
+-(void)positionOnPath:(TurtleBezierPath *)path
+{
+    self.center = path.currentPoint;
+    self.transform = CGAffineTransformMakeRotation( path.bearing * M_PI / 180.0f );
+}
+
 
 #pragma mark - Properties
+
+-(void)setFillColour:(UIColor *)fillColour
+{
+    _fillColour = fillColour;
+    
+    [ self setNeedsDisplay ];
+}
 
 -(void)setFrame:(CGRect)frame
 {
@@ -39,13 +71,18 @@
     [ self setNeedsDisplay ];
 }
 
+-(void)setStrokeColour:(UIColor *)strokeColour
+{
+    _strokeColour = strokeColour;
+    
+    [ self setNeedsDisplay ];
+}
+
 
 #pragma mark - drawRect
 
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
-    
     if( self.path )
     {
         TurtleBezierPath *drawPath = [ self.path copy ];
@@ -57,9 +94,11 @@
             [ drawPath fill ];
         }
         
-        UIColor *strokeColour = ( self.strokeColour ) ? self.strokeColour : [ UIColor blackColor ];
-        [ strokeColour set ];
-        [ drawPath stroke ];
+        if( self.strokeColour )
+        {
+            [ self.strokeColour set ];
+            [ drawPath stroke ];
+        }
     }
 }
 

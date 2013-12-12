@@ -22,11 +22,9 @@
 		A64AA0B718559841006A2736 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A64AA09618559841006A2736 /* UIKit.framework */; };
 		A64AA0BF18559841006A2736 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A64AA0BD18559841006A2736 /* InfoPlist.strings */; };
 		A64AA0C118559841006A2736 /* TurtleBezierPath_demoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0C018559841006A2736 /* TurtleBezierPath_demoTests.m */; };
-		A64AA0CC1855B947006A2736 /* TurtleDemoPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0CB1855B947006A2736 /* TurtleDemoPatternView.m */; };
 		A64AA0CF1855BA41006A2736 /* TurtleBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */; };
 		A64AA0D918565F8A006A2736 /* TurtleCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */; };
 		A655667F18574FCC0066C4CF /* RoundedUISlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A655667E18574FCC0066C4CF /* RoundedUISlider.m */; };
-		A6985CCE1858CC0200AF0F19 /* TurtleDemoPointerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6985CCD1858CC0200AF0F19 /* TurtleDemoPointerView.m */; };
 		A6985CD21858FD7D00AF0F19 /* TurtleDemoState.m in Sources */ = {isa = PBXBuildFile; fileRef = A6985CD11858FD7D00AF0F19 /* TurtleDemoState.m */; };
 		A6985CE1185A48BE00AF0F19 /* TurtleBezierPath+DemoPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = A6985CE0185A48BE00AF0F19 /* TurtleBezierPath+DemoPaths.m */; };
 /* End PBXBuildFile section */
@@ -62,16 +60,12 @@
 		A64AA0BC18559841006A2736 /* TurtleBezierPath demoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TurtleBezierPath demoTests-Info.plist"; sourceTree = "<group>"; };
 		A64AA0BE18559841006A2736 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A64AA0C018559841006A2736 /* TurtleBezierPath_demoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TurtleBezierPath_demoTests.m; sourceTree = "<group>"; };
-		A64AA0CA1855B947006A2736 /* TurtleDemoPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleDemoPatternView.h; sourceTree = "<group>"; };
-		A64AA0CB1855B947006A2736 /* TurtleDemoPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleDemoPatternView.m; sourceTree = "<group>"; };
 		A64AA0CD1855BA41006A2736 /* TurtleBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TurtleBezierPath.h; path = ../../TurtleBezierPath/TurtleBezierPath.h; sourceTree = "<group>"; };
 		A64AA0CE1855BA41006A2736 /* TurtleBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TurtleBezierPath.m; path = ../../TurtleBezierPath/TurtleBezierPath.m; sourceTree = "<group>"; };
 		A64AA0D718565F8A006A2736 /* TurtleCanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleCanvasView.h; sourceTree = "<group>"; };
 		A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleCanvasView.m; sourceTree = "<group>"; };
 		A655667D18574FCC0066C4CF /* RoundedUISlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundedUISlider.h; sourceTree = "<group>"; };
 		A655667E18574FCC0066C4CF /* RoundedUISlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundedUISlider.m; sourceTree = "<group>"; };
-		A6985CCC1858CC0200AF0F19 /* TurtleDemoPointerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleDemoPointerView.h; sourceTree = "<group>"; };
-		A6985CCD1858CC0200AF0F19 /* TurtleDemoPointerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleDemoPointerView.m; sourceTree = "<group>"; };
 		A6985CD01858FD7D00AF0F19 /* TurtleDemoState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurtleDemoState.h; sourceTree = "<group>"; };
 		A6985CD11858FD7D00AF0F19 /* TurtleDemoState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurtleDemoState.m; sourceTree = "<group>"; };
 		A6985CDF185A48BE00AF0F19 /* TurtleBezierPath+DemoPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TurtleBezierPath+DemoPaths.h"; sourceTree = "<group>"; };
@@ -144,10 +138,6 @@
 				A64AA0AB18559841006A2736 /* TurtleViewController.m */,
 				A64AA0AD18559841006A2736 /* Images.xcassets */,
 				A64AA09918559841006A2736 /* Supporting Files */,
-				A64AA0CA1855B947006A2736 /* TurtleDemoPatternView.h */,
-				A64AA0CB1855B947006A2736 /* TurtleDemoPatternView.m */,
-				A6985CCC1858CC0200AF0F19 /* TurtleDemoPointerView.h */,
-				A6985CCD1858CC0200AF0F19 /* TurtleDemoPointerView.m */,
 				A64AA0D718565F8A006A2736 /* TurtleCanvasView.h */,
 				A64AA0D818565F8A006A2736 /* TurtleCanvasView.m */,
 				A655667D18574FCC0066C4CF /* RoundedUISlider.h */,
@@ -300,11 +290,9 @@
 				A64AA0D918565F8A006A2736 /* TurtleCanvasView.m in Sources */,
 				A64AA0AC18559841006A2736 /* TurtleViewController.m in Sources */,
 				A655667F18574FCC0066C4CF /* RoundedUISlider.m in Sources */,
-				A6985CCE1858CC0200AF0F19 /* TurtleDemoPointerView.m in Sources */,
 				A64AA0A318559841006A2736 /* TurtleAppDelegate.m in Sources */,
 				A6985CD21858FD7D00AF0F19 /* TurtleDemoState.m in Sources */,
 				A64AA09F18559841006A2736 /* main.m in Sources */,
-				A64AA0CC1855B947006A2736 /* TurtleDemoPatternView.m in Sources */,
 				A64AA0CF1855BA41006A2736 /* TurtleBezierPath.m in Sources */,
 				A6985CE1185A48BE00AF0F19 /* TurtleBezierPath+DemoPaths.m in Sources */,
 			);

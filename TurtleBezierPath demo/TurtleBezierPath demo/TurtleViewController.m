@@ -11,8 +11,6 @@
 #import "RoundedUISlider.h"
 
 #import "TurtleCanvasView.h"
-#import "TurtleDemoPatternView.h"
-#import "TurtleDemoPointerView.h"
 #import "TurtleDemoState.h"
 #import "TurtleBezierPath.h"
 #import "TurtleBezierPath+DemoPaths.h"
@@ -27,7 +25,7 @@
 
 @property( nonatomic, assign ) TurtleDemoState *currentState;
 
-@property( nonatomic, strong ) TurtleDemoPointerView *pointerView;
+@property( nonatomic, strong ) TurtleCanvasView *pointerView;
 
 @property( nonatomic, strong ) TurtleBezierPath *path;
 @property( nonatomic, strong ) TurtleBezierPath *previewPath;
@@ -94,7 +92,9 @@
     redoSwipe.edges = UIRectEdgeRight;
     [ self.canvasView addGestureRecognizer:redoSwipe ];
     
-    self.pointerView = [[ TurtleDemoPointerView alloc ] initWithFrame:[ TurtleBezierPath pointerPath ].boundsForView ];
+    self.pointerView = [[ TurtleCanvasView alloc ] initWithPath:[ TurtleBezierPath pointerPath ]];
+    self.pointerView.backgroundColor = [ UIColor clearColor ];
+    self.pointerView.strokeColour = [ UIColor redColor ];
     [ self.view addSubview:self.pointerView ];
     
     self.commandLabel = [ UILabel new ];
@@ -125,7 +125,6 @@
     
     [ self reset ];
 }
-
 
 -(void)reset
 {
@@ -291,7 +290,9 @@
 {
     TurtleBezierPath *pointerPath = [ self.previewPath copy ];
     [ pointerPath centreInBounds:self.view.bounds ];
-    [ self.pointerView positionPointerOnPath:pointerPath ];
+    [ self.pointerView positionOnPath:pointerPath ];
+
+    self.pointerView.alpha = ( pointerPath.penUp ) ? 0.333f : 1.0f;
 }
 
 -(void)selectCommmandAtIndex:(NSInteger)index

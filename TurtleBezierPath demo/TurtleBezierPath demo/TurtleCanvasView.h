@@ -17,4 +17,7 @@
 @property( nonatomic, strong ) TurtleBezierPath *path;
 @property( nonatomic, strong ) UIColor *strokeColour;
 
+-(id)initWithPath:(TurtleBezierPath *)path;
+-(void)positionOnPath:(TurtleBezierPath *)path;
+
 @end
