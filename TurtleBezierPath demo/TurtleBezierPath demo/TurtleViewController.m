@@ -19,6 +19,7 @@
 
 @interface TurtleViewController ()
 
+@property( nonatomic, strong ) TurtleDemoState *clearState;
 @property( nonatomic, strong ) UISegmentedControl *commandControl;
 @property( nonatomic, strong ) UILabel *commandLabel;
 @property( nonatomic, strong ) TurtleCanvasView *canvasView;
@@ -117,11 +118,22 @@
     
     [ self initPath ];
     
-    self.undoComparisonState = [ self currentState ];
+    self.clearState = [ self currentState ];
     
-    [ self resetUndoTimer ];
+    
+    [ self reset ];
 }
 
+
+-(void)reset
+{
+    self.undoComparisonState = self.clearState;
+    
+    [ self resetUndoTimer ];
+    [ self.undoManager removeAllActions ];
+    
+    [ self setState:self.clearState ];
+}
 
 -(void)initPath
 {
@@ -152,23 +164,17 @@
     [ self positionPointer ];
 }
 
-/*
+/**/
 #pragma mark - UIResponder
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
     if (motion == UIEventSubtypeMotionShake)
     {
-        NSLog(@"Shaking!!!");
-        
-        [ self initPath ];
-        
-        self.commandControl.selectedSegmentIndex = -1;
-        
-        [ self selectCommmandAtIndex:-1 ];
+        [ self reset ];
     }
 }
-*/
+
 
 
 #pragma mark - Controls
