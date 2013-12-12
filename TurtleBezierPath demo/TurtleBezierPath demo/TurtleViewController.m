@@ -27,6 +27,7 @@
 @property( nonatomic, strong ) TurtleBezierPath *path;
 @property( nonatomic, strong ) TurtleBezierPath *previewPath;
 
+@property( nonatomic, strong ) NSTimer *undoTimer;
 @property( nonatomic, strong ) TurtleDemoState *undoComparisonState;
 
 @property( nonatomic, strong ) RoundedUISlider *valueSlider0;
@@ -118,8 +119,7 @@
     
     self.undoComparisonState = [ self currentState ];
     
-    //NSTimer *undoTimer = [ NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(undoTimerFired) userInfo:nil repeats:YES ];
-    //[[ NSRunLoop currentRunLoop ] addTimer:undoTimer forMode:NSRunLoopCommonModes ];
+    [ self resetUndoTimer ];
 }
 
 
@@ -175,17 +175,23 @@
 
 -(void)commmandSelected:(id)sender
 {
+    [ self resetUndoTimer ];
+    
     [ self selectCommmandAtIndex:self.commandControl.selectedSegmentIndex ];
 }
 
 -(void)sliderValueChanged0:(id)sender
 {
+    [ self resetUndoTimer ];
+    
     [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
 }
 
 -(void)sliderValueChanged1:(id)sender
 {
-   [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
+    [ self resetUndoTimer ];
+    
+    [ self updateCommandForIndex:self.commandControl.selectedSegmentIndex ];
 }
 
 -(void)setupSlidersForIndex:(NSInteger)index
@@ -212,8 +218,6 @@
 
 -(void)setState:(TurtleDemoState *)newState
 {
-    NSLog( @"setState: %@", newState );
-    
     self.commandControl.selectedSegmentIndex = newState.index;
     self.path = newState.path;
     self.previewPath = newState.previewPath;
@@ -226,14 +230,9 @@
 
 -(void)setUndoState:(TurtleDemoState *)newState
 {
-    NSLog( @"setUndoState" );
-    
     if( ![ newState isEqual:self.undoComparisonState ])
     {
-        NSLog( @"registerUndoWithTarget: %@", self.undoComparisonState );
-        
         [ self.undoManager registerUndoWithTarget:self selector:@selector(setUndoState:) object:self.undoComparisonState ];
-        //[undoManager setActionName:NSLocalizedString(@"Title Change", @"title undo")];
         
         self.undoComparisonState = newState;
         [ self setState:newState ];
@@ -256,13 +255,26 @@
     }
 }
 
+#pragma mark - Undo Timer
+
+-(void)resetUndoTimer
+{
+    if( self.undoTimer )
+    {
+        [ self.undoTimer invalidate ];
+    }
+    
+    self.undoTimer = [ NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(undoTimerFired) userInfo:nil repeats:NO ];
+    [[ NSRunLoop currentRunLoop ] addTimer:self.undoTimer forMode:NSRunLoopCommonModes ];
+}
 
 -(void)undoTimerFired
 {
-    NSLog( @"undoTimerFired" );
+    self.undoTimer = nil;
     
     [ self setUndoState:[ self currentState ]];
 }
+
 
 #pragma mark - Pointer
 
