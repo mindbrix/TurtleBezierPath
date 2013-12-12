@@ -156,7 +156,7 @@
     
     for( UIView *view in @[ self.valueSlider1, self.valueSlider0, self.commandControl ])
     {
-        view.frame = CGRectMake(( self.view.bounds.size.width - view.bounds.size.width ) / 2.0f, originY - view.bounds.size.height, view.bounds.size.width, view.bounds.size.height );
+        view.frame = CGRectIntegral( CGRectMake(( self.view.bounds.size.width - view.bounds.size.width ) / 2.0f, originY - view.bounds.size.height, view.bounds.size.width, view.bounds.size.height ));
         
         originY = view.frame.origin.y - view.frame.size.height * 0.2f;
     }
