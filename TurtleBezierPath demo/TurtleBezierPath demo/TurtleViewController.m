@@ -23,6 +23,9 @@
 @property( nonatomic, strong ) UISegmentedControl *commandControl;
 @property( nonatomic, strong ) UILabel *commandLabel;
 @property( nonatomic, strong ) TurtleCanvasView *canvasView;
+
+@property( nonatomic, assign ) TurtleDemoState *currentState;
+
 @property( nonatomic, strong ) TurtleDemoPointerView *pointerView;
 
 @property( nonatomic, strong ) TurtleBezierPath *path;
@@ -118,8 +121,7 @@
     
     [ self initPath ];
     
-    self.clearState = [ self currentState ];
-    
+    self.clearState =  self.currentState;
     
     [ self reset ];
 }
@@ -127,12 +129,10 @@
 
 -(void)reset
 {
-    self.undoComparisonState = self.clearState;
+    self.currentState = self.undoComparisonState = self.clearState;
     
     [ self resetUndoTimer ];
     [ self.undoManager removeAllActions ];
-    
-    [ self setState:self.clearState ];
 }
 
 -(void)initPath
@@ -164,7 +164,6 @@
     [ self positionPointer ];
 }
 
-/**/
 #pragma mark - UIResponder
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
@@ -174,7 +173,6 @@
         [ self reset ];
     }
 }
-
 
 
 #pragma mark - Controls
@@ -215,24 +213,27 @@
 }
 
 
-#pragma mark - Undo
+#pragma mark - Properties
 
 -(TurtleDemoState *)currentState
 {
     return [[ TurtleDemoState alloc ] initWithIndex:self.commandControl.selectedSegmentIndex path:self.path previewPath:self.previewPath value0:self.valueSlider0.value value1:self.valueSlider1.value ];
 }
 
--(void)setState:(TurtleDemoState *)newState
+-(void)setCurrentState:(TurtleDemoState *)currentState
 {
-    self.commandControl.selectedSegmentIndex = newState.index;
-    self.path = newState.path;
-    self.previewPath = newState.previewPath;
-    [ self setupSlidersForIndex:newState.index ];
-    self.valueSlider0.value = newState.value0;
-    self.valueSlider1.value = newState.value1;
+    self.commandControl.selectedSegmentIndex = currentState.index;
+    self.path = currentState.path;
+    self.previewPath = currentState.previewPath;
+    [ self setupSlidersForIndex:currentState.index ];
+    self.valueSlider0.value = currentState.value0;
+    self.valueSlider1.value = currentState.value1;
     
     [ self showState ];
 }
+
+
+#pragma mark - Undo
 
 -(void)setUndoState:(TurtleDemoState *)newState
 {
@@ -240,8 +241,7 @@
     {
         [ self.undoManager registerUndoWithTarget:self selector:@selector(setUndoState:) object:self.undoComparisonState ];
         
-        self.undoComparisonState = newState;
-        [ self setState:newState ];
+        self.currentState = self.undoComparisonState = newState;
     }
 }
 
@@ -260,6 +260,7 @@
         [ self.undoManager undo ];
     }
 }
+
 
 #pragma mark - Undo Timer
 
