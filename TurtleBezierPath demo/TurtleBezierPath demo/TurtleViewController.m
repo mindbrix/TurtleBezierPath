@@ -157,7 +157,7 @@
     {
         view.frame = CGRectMake(( self.view.bounds.size.width - view.bounds.size.width ) / 2.0f, originY - view.bounds.size.height, view.bounds.size.width, view.bounds.size.height );
         
-        originY = view.frame.origin.y;
+        originY = view.frame.origin.y - view.frame.size.height * 0.2f;
     }
     
     [ self positionPointer ];
