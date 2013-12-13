@@ -239,7 +239,7 @@
 
 -(void)setUndoState:(TurtleDemoState *)newState
 {
-    if( ![ newState isEqual:self.undoComparisonState ])
+    if( ![ newState.previewPath isEqual:self.undoComparisonState.previewPath ])
     {
         [ self.undoManager registerUndoWithTarget:self selector:@selector(setUndoState:) object:self.undoComparisonState ];
         
