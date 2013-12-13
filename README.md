@@ -1,5 +1,6 @@
 TurtleBezierPath
 ===================
 
+![Turtle Graphics!](Sequence 1.gif)
 
-![Turtle Graphics!](Screen shot 1.png)
+![Test pattern!](Screen shot 1.png)
