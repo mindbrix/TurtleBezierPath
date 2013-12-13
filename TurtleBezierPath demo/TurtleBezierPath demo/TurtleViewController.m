@@ -92,6 +92,8 @@
     redoSwipe.edges = UIRectEdgeRight;
     [ self.canvasView addGestureRecognizer:redoSwipe ];
     
+    CGFloat fontScale = ([[ UIDevice currentDevice ] userInterfaceIdiom ] == UIUserInterfaceIdiomPad ) ? 1.5f : 1.0f;
+    
     self.pointerView = [[ TurtleCanvasView alloc ] initWithPath:[ TurtleBezierPath pointerPath ]];
     self.pointerView.backgroundColor = [ UIColor clearColor ];
     self.pointerView.strokeColour = [ UIColor redColor ];
@@ -99,14 +101,17 @@
     
     self.commandLabel = [ UILabel new ];
     self.commandLabel.backgroundColor = [ UIColor clearColor ];
-    self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:18.0f ];
+    self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:18.0f * fontScale ];
     self.commandLabel.textAlignment = NSTextAlignmentCenter;
     self.commandLabel.textColor = [ UIColor blackColor ];
     self.commandLabel.text = @"";
     [ self.view addSubview:self.commandLabel ];
+     
     
     self.commandControl = [[ UISegmentedControl alloc ] initWithItems:@[ @"forward", @"turn", @"leftArc", @"rightArc", @"up" ]];
     [ self.commandControl addTarget:self action:@selector(commmandSelected:) forControlEvents:UIControlEventValueChanged ];
+    [ self.commandControl setTitleTextAttributes:@{ NSFontAttributeName : [ UIFont fontWithName:@"HelveticaNeue-Medium" size:13.0f * fontScale  ]} forState:UIControlStateNormal ];
+    
     [ self.view addSubview:self.commandControl ];
     
     self.valueSlider0 = [ RoundedUISlider new ];
