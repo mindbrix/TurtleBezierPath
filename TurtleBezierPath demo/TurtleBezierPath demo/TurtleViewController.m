@@ -209,7 +209,8 @@
     self.valueSlider0.maximumValue = ( index == 1 ) ? 360.0f : maximumLength;
     self.valueSlider1.maximumValue = 360.0f;
     
-    self.valueSlider0.rounding = ( index == 1 ) ? 5.0f : 1.0f;
+    CGFloat lengthRounding = ( index == 0 ) ? 10.0f : 5.0f;
+    self.valueSlider0.rounding = ( index == 1 ) ? 5.0f : lengthRounding;
     self.valueSlider1.rounding = 5.0f;
 }
 
