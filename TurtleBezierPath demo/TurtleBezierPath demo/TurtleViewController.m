@@ -273,7 +273,7 @@
         [ self.undoTimer invalidate ];
     }
     
-    self.undoTimer = [ NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(undoTimerFired) userInfo:nil repeats:NO ];
+    self.undoTimer = [ NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(undoTimerFired) userInfo:nil repeats:NO ];
     [[ NSRunLoop currentRunLoop ] addTimer:self.undoTimer forMode:NSRunLoopCommonModes ];
 }
 
