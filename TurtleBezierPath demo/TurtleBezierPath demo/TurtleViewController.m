@@ -106,7 +106,7 @@
     
     self.commandLabel = [ UILabel new ];
     self.commandLabel.backgroundColor = [ UIColor clearColor ];
-    self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:18.0f * fontScale ];
+    self.commandLabel.font = [ UIFont fontWithName:@"Menlo-Regular" size:17.0f * fontScale ];
     self.commandLabel.textAlignment = NSTextAlignmentCenter;
     self.commandLabel.textColor = self.commandControl.tintColor;
     self.commandLabel.text = @"";
@@ -344,15 +344,15 @@
     }
     else if( index < 2 )
     {
-        return [ NSString stringWithFormat:@"[ path %@:%g ]", title, value0 ];
+        return [ NSString stringWithFormat:@"[ path %@:%g ];", title, value0 ];
     }
     else if( index < 4 )
     {
-        return [ NSString stringWithFormat:@"[ path %@:%g turn:%g ]", title, value0, value1 ];
+        return [ NSString stringWithFormat:@"[ path %@:%g turn:%g ];", title, value0, value1 ];
     }
     else
     {
-        return [ NSString stringWithFormat:@"[ path %@ ]", title ];
+        return [ NSString stringWithFormat:@"[ path %@ ];", title ];
     }
 }
 
