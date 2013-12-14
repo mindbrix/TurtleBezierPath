@@ -5,7 +5,7 @@ TurtleBezierPath
 
 The Turtle is a drawing cursor that follows the commands: `home`, `turn`, `forward`, `leftArc`, `rightArc`, `up` and `down`. As the Turtle moves, it draws a path in its wake. Many shapes are much easier to draw this way.
 
-The demo app
+Demo app
 ------------------
 
 The app requires iOS 7 and allows you to explore Turtle Graphics drawing with simple controls. It's fun too!
@@ -16,7 +16,7 @@ Installation
 ------------------
 Simply add `TurtleBezierPath.h` and `TurtleBezierPath.m` to your project.
 
-`TurtleBezierPath.h` will work with both ARC and MRC projects.
+`TurtleBezierPath` will work with both ARC and MRC projects.
 
 @interface
 -----
