@@ -14,7 +14,7 @@ The app requires iOS 7 and allows you to explore Turtle Graphics drawing with si
 
 Installation
 ------------------
-Simply add `TurtleBezierPath.h` and `TurtleBezierPath.m` to your project.
+Simply add `TurtleBezierPath.h` and `TurtleBezierPath.m` to your project, or add it as a **Cocoapod** named `TurtleBezierPath`.
 
 `TurtleBezierPath` will work with both ARC and MRC projects.
 
