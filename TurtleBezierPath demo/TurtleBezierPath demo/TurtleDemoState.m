@@ -40,7 +40,7 @@
 
 -(NSString *)description
 {
-    return [ NSString stringWithFormat:@"index = %d, path = %@, previewPath = %@, value0 = %g, value1 = %g", self.index, self.path, self.previewPath, self.value0, self.value1 ];
+    return [ NSString stringWithFormat:@"index = %ld, path = %@, previewPath = %@, value0 = %g, value1 = %g", (long)self.index, self.path, self.previewPath, self.value0, self.value1 ];
 }
 
 @end

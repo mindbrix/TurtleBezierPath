@@ -20,15 +20,16 @@
 }
 
 
--(CGFloat)value
+-(float)value
 {
     return roundToStep( super.value, self.rounding );
 }
 
 
+
 #pragma mark - Maths
 
-static inline CGFloat roundToStep( CGFloat number, CGFloat step )
+static inline float roundToStep( float number, float step )
 {
     return ( step != 0.0f ) ? floorf( number / step ) * step : number;
 }
