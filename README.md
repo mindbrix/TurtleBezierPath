@@ -10,7 +10,7 @@ Demo app
 
 The app requires iOS 7 and allows you to explore Turtle Graphics drawing with simple controls. It's fun too!
 
-![Turtle Graphics!](Sequence 1.gif)
+![Turtle Graphics!](https://github.com/mindbrix/TurtleBezierPath/blob/f738542fd89f3eaac3a4e677908fe196bb16b8e4/Sequence%201.gif)
 
 Installation
 ------------------
